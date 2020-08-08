@@ -41,7 +41,7 @@ function newTime() {
 
     displaySpan.innerHTML = hours.pad(2) + " : " + minutes.pad(2);
     hideAnswer();
-    answerDisplay.innerHTML = getNumberWrittenKorean(hours) + "시 " + getNumberWrittenChinese(minutes) + "분";
+    answerDisplay.innerHTML = getNumberWrittenKorean(hours, true) + "시 " + getNumberWrittenChinese(minutes) + "분";
 }
 
 function getRandomBetweenInclusive(from, to) {
@@ -50,16 +50,30 @@ function getRandomBetweenInclusive(from, to) {
 
 const numbersWrittenKorean = {
     0: {
-        "0": "",
-        "1": "하나",
-        "2": "둘",
-        "3": "셋",
-        "4": "넷",
-        "5": "다섯",
-        "6": "여섯",
-        "7": "일곱",
-        "8": "여덟",
-        "9": "아홉",
+        "normal": {
+            "0": "",
+            "1": "하나",
+            "2": "둘",
+            "3": "셋",
+            "4": "넷",
+            "5": "다섯",
+            "6": "여섯",
+            "7": "일곱",
+            "8": "여덟",
+            "9": "아홉",
+        },
+        "abbreviated": {
+            "0": "",
+            "1": "한",
+            "2": "두",
+            "3": "세",
+            "4": "네",
+            "5": "다섯",
+            "6": "여섯",
+            "7": "일곱",
+            "8": "여덟",
+            "9": "아홉",
+        }
     },
     1: {
         "1": "열",
@@ -76,17 +90,17 @@ const numbersWrittenKorean = {
 };
 
 
-function getNumberWrittenKorean(number) {
+function getNumberWrittenKorean(number, useAbbreviated = false) {
     if (number > 99) {
         throw new Error("Fehler! Nur Zahlen < 99 im Koreanischen System.");
     }
     const numberAsStringReversed = reverseString(number.toString());
 
     var output = "";
-    for (i = 0; i < numberAsStringReversed.length; i++) {
-        output = numbersWrittenKorean[i][numberAsStringReversed.charAt(i)] + output;
+    output = numbersWrittenKorean[0][useAbbreviated ? "abbreviated" : "normal"][numberAsStringReversed.charAt(0)] + output;
+    if (numberAsStringReversed.charAt(1)) {
+        output = numbersWrittenKorean[1][numberAsStringReversed.charAt(1)] + output;
     }
-
     return output;
 
 }
