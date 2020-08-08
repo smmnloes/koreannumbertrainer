@@ -158,8 +158,9 @@ function newWeekDay() {
     let displaySpan = getDisplaySpan();
     let weekdays = getWeekDays();
 
+    let random;
     do {
-        let random = getRandomBetweenInclusive(0, 6);
+        random = getRandomBetweenInclusive(0, 6);
     }
     while (random === lastWeekdayRandom);
 
