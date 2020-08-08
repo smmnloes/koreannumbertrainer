@@ -1,5 +1,5 @@
-STANDARD_FROM = 0
-STANDARD_TO = 100
+DEFAULT_FROM = 0;
+DEFAULT_TO = 100;
 
 
 function getDisplaySpan() {
@@ -17,9 +17,9 @@ function newNumber() {
     let answerDisplay = getanswerDisplay();
 
     let numberFromUserInput = Number.parseInt(numberFromInput.value);
-    let numberFrom = isNaN(numberFromUserInput) ? STANDARD_FROM : numberFromUserInput;
+    let numberFrom = isNaN(numberFromUserInput) ? DEFAULT_FROM : numberFromUserInput;
     let numberToUserInput = Number.parseInt(numberToInput.value);
-    let numberTo = isNaN(numberToUserInput) ? STANDARD_TO : numberToUserInput;
+    let numberTo = isNaN(numberToUserInput) ? DEFAULT_TO : numberToUserInput;
     let randomNumber = getRandomBetweenInclusive(numberFrom, numberTo);
     displaySpan.innerHTML = randomNumber;
     let isKoreanNumber = document.querySelector('#koreanNumber').checked;
@@ -28,6 +28,7 @@ function newNumber() {
         hideAnswer();
     } catch (e) {
         answerDisplay.innerHTML = e.message;
+        showAnswer();
     }
 }
 
@@ -75,6 +76,22 @@ const numbersWrittenKorean = {
 };
 
 
+function getNumberWrittenKorean(number) {
+    if (number > 99) {
+        throw new Error("Fehler! Nur Zahlen < 99 im Koreanischen System.");
+    }
+    const numberAsStringReversed = reverseString(number.toString());
+
+    var output = "";
+    for (i = 0; i < numberAsStringReversed.length; i++) {
+        output = numbersWrittenKorean[i][numberAsStringReversed.charAt(i)] + output;
+    }
+
+    return output;
+
+}
+
+
 const numbersWrittenChinese = {
     0: {
         "0": "",
@@ -93,21 +110,6 @@ const numbersWrittenChinese = {
     3: "천"
 };
 
-
-function getNumberWrittenKorean(number) {
-    if (number > 99) {
-        throw new Error("Fehler! Nur Zahlen < 99 im Koreanischen System.");
-    }
-    const numberAsStringReversed = reverseString(number.toString());
-
-    var output = "";
-    for (i = 0; i < numberAsStringReversed.length; i++) {
-        output = numbersWrittenKorean[i][numberAsStringReversed.charAt(i)] + output;
-    }
-
-    return output;
-
-}
 
 function getNumberWrittenChinese(number) {
     const numberAsStringReversed = reverseString(number.toString());
@@ -142,11 +144,20 @@ function getWeekDays() {
     };
 }
 
+let lastWeekdayRandom;
+
 function newWeekDay() {
     let answerDisplay = getanswerDisplay();
     let displaySpan = getDisplaySpan();
     let weekdays = getWeekDays();
-    let random = getRandomBetweenInclusive(0, 6);
+
+    do {
+        var random = getRandomBetweenInclusive(0, 6);
+    }
+    while (random === lastWeekdayRandom);
+
+    lastWeekdayRandom = random;
+
     let randomWeekDayGerman = Object.keys(weekdays)[random];
     displaySpan.innerHTML = randomWeekDayGerman;
     answerDisplay.innerHTML = weekdays[randomWeekDayGerman];
