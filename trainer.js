@@ -143,7 +143,7 @@ function getNumberWrittenChinese(number) {
         }
         let currentChar = numberAsStringReversed.charAt(i);
         output = ((currentChar > 0 || i === 4) ? numbersWrittenChinese[i] : "") + output;
-        output = ((currentChar > 1 && i !== 4) ? numbersWrittenChinese[0][currentChar] : "") + output;
+        output = ((currentChar > 1 && (i !== 4 || i === numberAsStringReversed.length - 1)) ? numbersWrittenChinese[0][currentChar] : "") + output;
     }
     return output;
 }
