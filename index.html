@@ -2,17 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Koreanischer Zahlen- und Wochentag Trainer</title>
+    <title>Koreanische Zahlen- und Wochentage Trainer</title>
     <script src="trainer.js"></script>
     <style>
         #app h1 {
             text-align: center;
-            font-size: 4rem;
+            font-size: 3rem;
+            font-weight: normal;
         }
 
         #app {
             margin: auto;
-            max-width: 50%;
+            max-width: 80%;
             max-height: 50%;
             margin-top: 5%;
             font-size: 2rem;
@@ -21,58 +22,80 @@
 
         .numberinputs {
             font-size: 1.5rem;
+            padding: 10px;
+            text-align: center;
         }
 
-        #display {
+        .display {
             padding: 10px;
+            margin: auto;
+            max-width: 100%;
+            text-align: center;
         }
 
-        #additionalDisplay {
-            padding: 10px;
-        }
-
-        #numberFrom {
-            padding: 10px;
-        }
-
-        #numberTo {
-            padding: 10px;
-        }
 
         label {
             margin-right: 10px;
         }
 
-        #buttons button {
-            font-weight: bold;
-        }
 
         #content {
-            margin:auto;
+            margin: auto;
             max-width: 80%;
         }
 
         #buttons {
-            margin:auto;
             max-width: 80%;
+            margin: 2rem auto;
+            text-align: center;
+        }
+
+        #buttons button {
+            font-size: 1.5rem;
+            border-radius: 0.1rem;
+            box-shadow: 1px 1px 2px darkgray;
+            margin: 1rem;
+        }
+
+        #koreanOrChinese {
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        #displays {
+            border-style: solid;
+            border-radius: 5px;
+            max-width: 75%;
+            margin: auto;
         }
     </style>
 </head>
 <body>
 <div id="app">
-    <h1>Koreanischer Zahlen- und Wochentag Trainer</h1>
+    <h1>Koreanische Zahlen- und Wochentage Trainer</h1>
     <div id="content">
-        <div id="display"><span>&nbsp;</span></div>
-        <div id="additionalDisplay" onclick="showWeekDayAnswer()"><span>&nbsp;</span></div>
-        <div id="numberFrom" class="numberinputs"><label for="numberFromInput"># Von:</label><input type="number"
-                                                                                                    id="numberFromInput">
-        </div>
-        <div id="numberTo" class="numberinputs"><label for="numberToInput"># Bis:</label><input type="number"
-                                                                                                id="numberToInput">
+        <div id="displays">
+            <div id="display" class="display"><span>&nbsp;</span></div>
+            <div id="answerDisplay" class="display" onclick="showAnswer()"><span>&nbsp;</span></div>
         </div>
         <div id="buttons">
             <button onclick="newNumber()">Zahl</button>
             <button onclick="newWeekDay()">Wochentag</button>
+            <button onclick="newTime()">Uhrzeit</button>
+        </div>
+        <div id="numberFrom" class="numberinputs"><label for="numberFromInput"># Von:</label><input type="number"
+                                                                                                    id="numberFromInput"
+                                                                                                    min="1">
+        </div>
+        <div id="numberTo" class="numberinputs"><label for="numberToInput"># Bis:</label><input type="number"
+                                                                                                id="numberToInput" max="9999">
+        </div>
+
+        <div id="koreanOrChinese">
+            <label for="koreanNumber">Koreanisch</label><input type="radio" id="koreanNumber" name="selectNumberSystem"
+                                                               checked>
+            <label for="chineseNumber">Chinesisch</label><input type="radio" id="chineseNumber"
+                                                                name="selectNumberSystem">
         </div>
     </div>
 </div>
