@@ -20,7 +20,7 @@ function newNumber() {
     let numberFrom = isNaN(numberFromUserInput) ? STANDARD_FROM : numberFromUserInput;
     let numberToUserInput = Number.parseInt(numberToInput.value);
     let numberTo = isNaN(numberToUserInput) ? STANDARD_TO : numberToUserInput;
-    let randomNumber = Math.floor(numberFrom + (Math.random() * (numberTo - numberFrom + 1)));
+    let randomNumber = getRandomBetweenInclusive(numberFrom, numberTo);
     displaySpan.innerHTML = randomNumber;
     let isKoreanNumber = document.querySelector('#koreanNumber').checked;
     try {
@@ -29,6 +29,22 @@ function newNumber() {
     } catch (e) {
         answerDisplay.innerHTML = e.message;
     }
+}
+
+function newTime() {
+    let displaySpan = getDisplaySpan();
+    let answerDisplay = getanswerDisplay();
+
+    let hours = getRandomBetweenInclusive(1, 12);
+    let minutes = getRandomBetweenInclusive(0, 59);
+
+    displaySpan.innerHTML = hours.pad(2) + " : " + minutes.pad(2);
+    hideAnswer();
+    answerDisplay.innerHTML = getNumberWrittenKorean(hours) + "시 " + getNumberWrittenChinese(minutes) + "분";
+}
+
+function getRandomBetweenInclusive(from, to) {
+    return Math.floor(from + (Math.random() * (to - from + 1)));
 }
 
 const numbersWrittenKorean = {
@@ -130,7 +146,7 @@ function newWeekDay() {
     let answerDisplay = getanswerDisplay();
     let displaySpan = getDisplaySpan();
     let weekdays = getWeekDays();
-    let random = Math.floor(Math.random() * 7);
+    let random = getRandomBetweenInclusive(0, 6);
     let randomWeekDayGerman = Object.keys(weekdays)[random];
     displaySpan.innerHTML = randomWeekDayGerman;
     answerDisplay.innerHTML = weekdays[randomWeekDayGerman];
@@ -144,3 +160,11 @@ function hideAnswer() {
 function showAnswer() {
     getanswerDisplay().setAttribute('style', 'background-color: white')
 }
+
+Number.prototype.pad = function (size) {
+    var s = String(this);
+    while (s.length < (size || 2)) {
+        s = "0" + s;
+    }
+    return s;
+};
