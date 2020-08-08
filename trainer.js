@@ -112,6 +112,9 @@ const numbersWrittenChinese = {
 
 
 function getNumberWrittenChinese(number) {
+    if (number > 9999) {
+        throw new Error("Fehler! Nur Zahlen bis 9999 unterstützt.")
+    }
     const numberAsStringReversed = reverseString(number.toString());
 
     var output = "";
