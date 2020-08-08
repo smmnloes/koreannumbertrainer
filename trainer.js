@@ -86,7 +86,7 @@ function getNumberWrittenKorean(number) {
 
     var output = "";
     for (i = 0; i < numberAsStringReversed.length; i++) {
-        output = numbersWrittenKorean[i][numberAsStringReversed.charAt(i)] + " " + output;
+        output = numbersWrittenKorean[i][numberAsStringReversed.charAt(i)] + output;
     }
 
     return output;
