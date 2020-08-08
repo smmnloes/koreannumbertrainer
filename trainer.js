@@ -31,25 +31,6 @@ function newNumber() {
     }
 }
 
-
-const numbersWrittenChinese = {
-    "chinese": {
-        "0": {
-            "1": "일",
-            "2": "이",
-            "3": "삼",
-            "4": "사",
-            "5": "오",
-            "6": "육",
-            "7": "칠",
-            "8": "팔",
-            "9": "구"
-        },
-        "1": "십",
-        "2": "백",
-        "3": "천"
-    }
-};
 const numbersWrittenKorean = {
     0: {
         "0": "",
@@ -78,6 +59,25 @@ const numbersWrittenKorean = {
 };
 
 
+const numbersWrittenChinese = {
+    0: {
+        "0": "",
+        "1": "일",
+        "2": "이",
+        "3": "삼",
+        "4": "사",
+        "5": "오",
+        "6": "육",
+        "7": "칠",
+        "8": "팔",
+        "9": "구"
+    },
+    1: "십",
+    2: "백",
+    3: "천"
+};
+
+
 function getNumberWrittenKorean(number) {
     if (number > 99) {
         throw new Error("Fehler! Nur Zahlen < 99 im Koreanischen System.");
@@ -94,8 +94,21 @@ function getNumberWrittenKorean(number) {
 }
 
 function getNumberWrittenChinese(number) {
+    const numberAsStringReversed = reverseString(number.toString());
 
+    var output = "";
+
+    let currentChar = numberAsStringReversed.charAt(0);
+    output = (currentChar > 0 ? numbersWrittenChinese[0][currentChar] : "") + output;
+
+    for (i = 1; i < numberAsStringReversed.length; i++) {
+        let currentChar = numberAsStringReversed.charAt(i);
+        output = (currentChar > 0 ? numbersWrittenChinese[i] : "") + output;
+        output = (currentChar > 1 ? numbersWrittenChinese[0][currentChar] : "") + output;
+    }
+    return output;
 }
+
 
 function reverseString(str) {
     return str.split("").reverse().join("");
