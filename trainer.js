@@ -107,25 +107,29 @@ const numbersWrittenChinese = {
     },
     1: "십",
     2: "백",
-    3: "천"
+    3: "천",
+    4: "만"
 };
 
 
 function getNumberWrittenChinese(number) {
-    if (number > 9999) {
-        throw new Error("Fehler! Nur Zahlen bis 9999 unterstützt.")
-    }
-    const numberAsStringReversed = reverseString(number.toString());
+    let numberAsString = number.toString();
+    const numberAsStringReversed = reverseString(numberAsString);
 
-    var output = "";
+    let output = "";
 
     let currentChar = numberAsStringReversed.charAt(0);
     output = (currentChar > 0 ? numbersWrittenChinese[0][currentChar] : "") + output;
 
     for (i = 1; i < numberAsStringReversed.length; i++) {
+        if (i > 4) {
+            let partialNumberFor10KString = numberAsString.substring(0, numberAsString.length - 4);
+            output = getNumberWrittenChinese(Number.parseInt(partialNumberFor10KString)) + output;
+            return output;
+        }
         let currentChar = numberAsStringReversed.charAt(i);
-        output = (currentChar > 0 ? numbersWrittenChinese[i] : "") + output;
-        output = (currentChar > 1 ? numbersWrittenChinese[0][currentChar] : "") + output;
+        output = ((currentChar > 0 || i === 4) ? numbersWrittenChinese[i] : "") + output;
+        output = ((currentChar > 1 && i !== 4) ? numbersWrittenChinese[0][currentChar] : "") + output;
     }
     return output;
 }
@@ -155,7 +159,7 @@ function newWeekDay() {
     let weekdays = getWeekDays();
 
     do {
-        var random = getRandomBetweenInclusive(0, 6);
+        let random = getRandomBetweenInclusive(0, 6);
     }
     while (random === lastWeekdayRandom);
 
@@ -176,7 +180,7 @@ function showAnswer() {
 }
 
 Number.prototype.pad = function (size) {
-    var s = String(this);
+    let s = String(this);
     while (s.length < (size || 2)) {
         s = "0" + s;
     }
