@@ -63,9 +63,10 @@
     <h1>Koreanischer Zahlen- und Wochentag Trainer</h1>
     <div id="content">
         <div id="display"><span>&nbsp;</span></div>
-        <div id="additionalDisplay" onclick="showWeekDayAnswer()"><span>&nbsp;</span></div>
+        <div id="answerDisplay" onclick="showAnswer()"><span>&nbsp;</span></div>
         <div id="numberFrom" class="numberinputs"><label for="numberFromInput"># Von:</label><input type="number"
-                                                                                                    id="numberFromInput">
+                                                                                                    id="numberFromInput"
+        min="1">
         </div>
         <div id="numberTo" class="numberinputs"><label for="numberToInput"># Bis:</label><input type="number"
                                                                                                 id="numberToInput">
@@ -73,6 +74,10 @@
         <div id="buttons">
             <button onclick="newNumber()">Zahl</button>
             <button onclick="newWeekDay()">Wochentag</button>
+        </div>
+        <div id="koreanOrChinese">
+            <label for="koreanNumber">Koreanisch</label><input type="radio" id="koreanNumber" name="selectNumberSystem" checked>
+            <label for="chineseNumber">Chinesisch</label><input type="radio" id="chineseNumber" name="selectNumberSystem">
         </div>
     </div>
 </div>
