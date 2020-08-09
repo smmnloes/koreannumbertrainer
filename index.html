@@ -82,6 +82,7 @@
         #direction {
             margin-top: 4rem;
         }
+
         #displays {
             border-style: solid;
             border-radius: 5px;
@@ -113,18 +114,13 @@
 
         <div id="options">
             <div id="koreanOrChinese">
-                <label for="koreanNumber">Korean</label><input type="radio" id="koreanNumber" name="selectNumberSystem"
-            >
-                <label for="chineseNumber">Chinese</label><input type="radio" id="chineseNumber"
-                                                                 name="selectNumberSystem" checked>
+                <label><input type="radio" id="koreanNumber" name="selectNumberSystem">Korean</label>
+                <label><input type="radio" id="chineseNumber" name="selectNumberSystem" checked>Chinese</label>
             </div>
             <div id="direction">
                 <p>Show</p>
-                <label for="showKoreanDigits">Korean/Digits</label><input type="radio" id="showKoreanDigits"
-                                                                               name="selectDirection"
-            >
-                <label for="showEnglishWritten">English/Written</label><input type="radio" id="showEnglishWritten"
-                                                                                   name="selectDirection" checked>
+                <label><input type="radio" id="showKoreanDigits" name="selectDirection">Korean/Digits</label>
+                <label><input type="radio" id="showEnglishWritten" name="selectDirection" checked>English/Written</label>
             </div>
         </div>
     </div>
