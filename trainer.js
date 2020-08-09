@@ -25,7 +25,7 @@ function newNumber() {
     let isKoreanNumber = document.querySelector('#koreanNumber').checked;
     try {
         answerDisplay.innerHTML = isKoreanNumber ? getNumberWrittenKorean(randomNumber) : getNumberWrittenChinese(randomNumber);
-        //hideAnswer();
+        hideAnswer();
     } catch (e) {
         answerDisplay.innerHTML = e.message;
         showAnswer();
