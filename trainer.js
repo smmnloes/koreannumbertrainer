@@ -1,6 +1,6 @@
-DEFAULT_FROM = 1;
-DEFAULT_TO = 100;
-
+const DEFAULT_FROM = 1;
+const DEFAULT_TO = 100;
+const MIN_VALUE_FROM = 1;
 
 function getVisibleDisplay() {
     return document.querySelector('#display span');
@@ -21,7 +21,7 @@ function newNumber() {
     let numberToInput = document.querySelector('#numberToInput');
 
     let numberFromUserInput = Number.parseInt(numberFromInput.value);
-    let numberFrom = isNaN(numberFromUserInput) ? DEFAULT_FROM : numberFromUserInput;
+    let numberFrom = isNaN(numberFromUserInput) || numberFromUserInput < MIN_VALUE_FROM ? DEFAULT_FROM : numberFromUserInput;
     let numberToUserInput = Number.parseInt(numberToInput.value);
     let numberTo = isNaN(numberToUserInput) ? DEFAULT_TO : numberToUserInput;
     let randomNumber = getRandomBetweenInclusive(numberFrom, numberTo);
@@ -38,8 +38,8 @@ function newNumber() {
         }
         hideAnswer();
     } catch (e) {
-        hiddenDisplay.innerHTML = e.message;
-        showAnswer();
+        visibleDisplay.innerHTML = e.message;
+        hiddenDisplay.innerHTML = "";
     }
 }
 
@@ -213,24 +213,22 @@ function reverseString(str) {
     return str.split("").reverse().join("");
 }
 
-function getWeekDays() {
-    return {
-        "Monday": "월요일",
-        "Tuesday": "화요일",
-        "Wednesday": "수요일",
-        "Thursday": "목요일",
-        "Friday": "금요일",
-        "Saturday": "토요일",
-        "Sunday": "일요일"
-    };
-}
+const weekDays = {
+    "Monday": "월요일",
+    "Tuesday": "화요일",
+    "Wednesday": "수요일",
+    "Thursday": "목요일",
+    "Friday": "금요일",
+    "Saturday": "토요일",
+    "Sunday": "일요일"
+};
+
 
 let lastWeekdayRandom;
 
 function newWeekDay() {
     let hiddenDisplay = getHiddenDisplay();
     let visibleDisplay = getVisibleDisplay();
-    let weekdays = getWeekDays();
 
     let random;
     do {
@@ -240,14 +238,14 @@ function newWeekDay() {
 
     lastWeekdayRandom = random;
 
-    let randomWeekDayEnglish = Object.keys(weekdays)[random];
+    let randomWeekDayEnglish = Object.keys(weekDays)[random];
 
     if (getShowEnglishWritten()) {
         visibleDisplay.innerHTML = randomWeekDayEnglish;
-        hiddenDisplay.innerHTML = weekdays[randomWeekDayEnglish];
+        hiddenDisplay.innerHTML = weekDays[randomWeekDayEnglish];
     } else {
         hiddenDisplay.innerHTML = randomWeekDayEnglish;
-        visibleDisplay.innerHTML = weekdays[randomWeekDayEnglish];
+        visibleDisplay.innerHTML = weekDays[randomWeekDayEnglish];
     }
     hideAnswer();
 }
