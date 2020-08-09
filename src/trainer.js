@@ -49,7 +49,7 @@ function newTime() {
 
     let hours = getRandomBetweenInclusive(1, 12);
     let minutes = getRandomBetweenInclusive(0, 59);
-    let written = getTimeWritten(hours, minute);
+    let written = getTimeWritten(hours, minutes);
     let digits = hours.pad(2) + ":" + minutes.pad(2);
     if (getShowEnglishWritten()) {
         visibleDisplay.innerHTML = written;
