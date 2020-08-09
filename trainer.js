@@ -2,46 +2,63 @@ DEFAULT_FROM = 0;
 DEFAULT_TO = 100;
 
 
-function getDisplaySpan() {
+function getVisibleDisplay() {
     return document.querySelector('#display span');
 }
 
-function getanswerDisplay() {
+function getHiddenDisplay() {
     return document.querySelector('#answerDisplay span');
 }
 
+function getShowEnglishWritten() {
+    return document.querySelector('#showEnglishWritten').checked;
+}
+
 function newNumber() {
-    let displaySpan = getDisplaySpan();
+    let visibleDisplay = getVisibleDisplay();
+    let hiddenDisplay = getHiddenDisplay();
     let numberFromInput = document.querySelector('#numberFromInput');
     let numberToInput = document.querySelector('#numberToInput');
-    let answerDisplay = getanswerDisplay();
 
     let numberFromUserInput = Number.parseInt(numberFromInput.value);
     let numberFrom = isNaN(numberFromUserInput) ? DEFAULT_FROM : numberFromUserInput;
     let numberToUserInput = Number.parseInt(numberToInput.value);
     let numberTo = isNaN(numberToUserInput) ? DEFAULT_TO : numberToUserInput;
     let randomNumber = getRandomBetweenInclusive(numberFrom, numberTo);
-    displaySpan.innerHTML = randomNumber;
     let isKoreanNumber = document.querySelector('#koreanNumber').checked;
+    let showEnglishWritten = getShowEnglishWritten();
     try {
-        answerDisplay.innerHTML = isKoreanNumber ? getNumberWrittenKorean(randomNumber) : getNumberWrittenChinese(randomNumber);
+        writtenNumber = isKoreanNumber ? getNumberWrittenKorean(randomNumber) : getNumberWrittenChinese(randomNumber);
+        if (showEnglishWritten) {
+            visibleDisplay.innerHTML = writtenNumber;
+            hiddenDisplay.innerHTML = randomNumber;
+        } else {
+            hiddenDisplay.innerHTML = writtenNumber;
+            visibleDisplay.innerHTML = randomNumber;
+        }
         hideAnswer();
     } catch (e) {
-        answerDisplay.innerHTML = e.message;
+        hiddenDisplay.innerHTML = e.message;
         showAnswer();
     }
 }
 
 function newTime() {
-    let displaySpan = getDisplaySpan();
-    let answerDisplay = getanswerDisplay();
+    let visibleDisplay = getVisibleDisplay();
+    let hiddenDisplay = getHiddenDisplay();
 
     let hours = getRandomBetweenInclusive(1, 12);
     let minutes = getRandomBetweenInclusive(0, 59);
-
-    displaySpan.innerHTML = hours.pad(2) + ":" + minutes.pad(2);
+    let written = getNumberWrittenKorean(hours, true) + "시 " + getNumberWrittenChinese(minutes) + "분";
+    let digits = hours.pad(2) + ":" + minutes.pad(2);
+    if (getShowEnglishWritten()) {
+        visibleDisplay.innerHTML = written;
+        hiddenDisplay.innerHTML = digits;
+    } else {
+        visibleDisplay.innerHTML = digits;
+        hiddenDisplay.innerHTML = written;
+    }
     hideAnswer();
-    answerDisplay.innerHTML = getNumberWrittenKorean(hours, true) + "시 " + getNumberWrittenChinese(minutes) + "분";
 }
 
 function getRandomBetweenInclusive(from, to) {
@@ -92,7 +109,7 @@ const numbersWrittenKorean = {
 
 function getNumberWrittenKorean(number, useAbbreviated = false) {
     if (number > 99) {
-        throw new Error("Fehler! Nur Zahlen < 99 im Koreanischen System.");
+        throw new Error("Error! Only numbers < 99 exist in the Korean system.");
     }
     const numberAsStringReversed = reverseString(number.toString());
 
@@ -172,7 +189,7 @@ function getNumberWrittenChinese(number) {
                 //
                 || ([4, 8, 12, 16].includes(i)
                     && nextFourDigitsHaveNonZero(i, numberAsStringReversed)
-                    )) ? numbersWrittenChinese[0][currentChar] : "") + output;
+                )) ? numbersWrittenChinese[0][currentChar] : "") + output;
     }
     return output;
 }
@@ -198,21 +215,21 @@ function reverseString(str) {
 
 function getWeekDays() {
     return {
-        "Montag": "월요일",
-        "Dienstag": "화요일",
-        "Mittwoch": "수요일",
-        "Donnerstag": "목요일",
-        "Freitag": "금요일",
-        "Samstag": "토요일",
-        "Sonntag": "일요일"
+        "Monday": "월요일",
+        "Tuesday": "화요일",
+        "Wednesday": "수요일",
+        "Thursday": "목요일",
+        "Friday": "금요일",
+        "Saturday": "토요일",
+        "Sunday": "일요일"
     };
 }
 
 let lastWeekdayRandom;
 
 function newWeekDay() {
-    let answerDisplay = getanswerDisplay();
-    let displaySpan = getDisplaySpan();
+    let hiddenDisplay = getHiddenDisplay();
+    let visibleDisplay = getVisibleDisplay();
     let weekdays = getWeekDays();
 
     let random;
@@ -223,18 +240,24 @@ function newWeekDay() {
 
     lastWeekdayRandom = random;
 
-    let randomWeekDayGerman = Object.keys(weekdays)[random];
-    displaySpan.innerHTML = randomWeekDayGerman;
-    answerDisplay.innerHTML = weekdays[randomWeekDayGerman];
+    let randomWeekDayEnglish = Object.keys(weekdays)[random];
+
+    if (getShowEnglishWritten()) {
+        visibleDisplay.innerHTML = randomWeekDayEnglish;
+        hiddenDisplay.innerHTML = weekdays[randomWeekDayEnglish];
+    } else {
+        hiddenDisplay.innerHTML = randomWeekDayEnglish;
+        visibleDisplay.innerHTML = weekdays[randomWeekDayEnglish];
+    }
     hideAnswer();
 }
 
 function hideAnswer() {
-    getanswerDisplay().setAttribute('style', 'background-color: black')
+    getHiddenDisplay().setAttribute('style', 'background-color: black')
 }
 
 function showAnswer() {
-    getanswerDisplay().setAttribute('style', 'background-color: white')
+    getHiddenDisplay().setAttribute('style', 'background-color: white')
 }
 
 Number.prototype.pad = function (size) {

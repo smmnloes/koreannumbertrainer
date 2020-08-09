@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Koreanisch Trainer</title>
+    <title>Korean Trainer</title>
     <script src="trainer.js"></script>
     <style>
         #app h1 {
@@ -73,12 +73,15 @@
             margin: 1rem;
         }
 
-        #koreanOrChinese {
+        #options {
             text-align: center;
             font-size: 2rem;
             margin-top: 2rem;
         }
 
+        #direction {
+            margin-top: 4rem;
+        }
         #displays {
             border-style: solid;
             border-radius: 5px;
@@ -89,30 +92,40 @@
 </head>
 <body>
 <div id="app">
-    <h1>Koreanisch Trainer</h1>
+    <h1>Korean Trainer</h1>
     <div id="content">
         <div id="displays">
             <div id="display" class="display"><span>&nbsp;</span></div>
             <div id="answerDisplay" class="display" onclick="showAnswer()"><span>&nbsp;</span></div>
         </div>
         <div id="buttons">
-            <button onclick="newNumber()">Zahl</button>
-            <button onclick="newWeekDay()">Wochentag</button>
-            <button onclick="newTime()">Uhrzeit</button>
+            <button onclick="newNumber()">Number</button>
+            <button onclick="newWeekDay()">Weekday</button>
+            <button onclick="newTime()">Time</button>
         </div>
-        <div id="numberFrom" class="numberinputs"><label for="numberFromInput"># Von:</label><input type="number"
-                                                                                                    id="numberFromInput"
-                                                                                                    min="1">
+        <div id="numberFrom" class="numberinputs"><label for="numberFromInput"># From:</label><input type="number"
+                                                                                                     id="numberFromInput"
+                                                                                                     min="1">
         </div>
-        <div id="numberTo" class="numberinputs"><label for="numberToInput"># Bis:</label><input type="number"
-                                                                                                id="numberToInput">
+        <div id="numberTo" class="numberinputs"><label for="numberToInput"># To:</label><input type="number"
+                                                                                               id="numberToInput">
         </div>
 
-        <div id="koreanOrChinese">
-            <label for="koreanNumber">Koreanisch</label><input type="radio" id="koreanNumber" name="selectNumberSystem"
-        >
-            <label for="chineseNumber">Chinesisch</label><input type="radio" id="chineseNumber"
-                                                                name="selectNumberSystem" checked>
+        <div id="options">
+            <div id="koreanOrChinese">
+                <label for="koreanNumber">Korean</label><input type="radio" id="koreanNumber" name="selectNumberSystem"
+            >
+                <label for="chineseNumber">Chinese</label><input type="radio" id="chineseNumber"
+                                                                 name="selectNumberSystem" checked>
+            </div>
+            <div id="direction">
+                <p>Show</p>
+                <label for="showKoreanDigits">Korean/Digits</label><input type="radio" id="showKoreanDigits"
+                                                                               name="selectDirection"
+            >
+                <label for="showEnglishWritten">English/Written</label><input type="radio" id="showEnglishWritten"
+                                                                                   name="selectDirection" checked>
+            </div>
         </div>
     </div>
 </div>
