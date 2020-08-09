@@ -20,6 +20,16 @@
             font-family: monospace;
         }
 
+        @media screen and (max-device-width: 1080px) {
+            #app {
+                max-width: 100%;
+            }
+
+            #content {
+                max-width: 100%;
+            }
+        }
+
         .numberinputs {
             font-size: 1.5rem;
             padding: 10px;
@@ -93,7 +103,7 @@
 
         <div id="koreanOrChinese">
             <label for="koreanNumber">Koreanisch</label><input type="radio" id="koreanNumber" name="selectNumberSystem"
-                                                               >
+        >
             <label for="chineseNumber">Chinesisch</label><input type="radio" id="chineseNumber"
                                                                 name="selectNumberSystem" checked>
         </div>
