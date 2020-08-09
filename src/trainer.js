@@ -1,5 +1,5 @@
 const DEFAULT_FROM = 1;
-const DEFAULT_TO = 100;
+const DEFAULT_TO = 99;
 const MIN_VALUE_FROM = 1;
 
 function getVisibleDisplay() {
@@ -28,7 +28,7 @@ function newNumber() {
     let isKoreanNumber = document.querySelector('#koreanNumber').checked;
     let showEnglishWritten = getShowEnglishWritten();
     try {
-        writtenNumber = isKoreanNumber ? getNumberWrittenKorean(randomNumber) : getNumberWrittenChinese(randomNumber);
+        let writtenNumber = isKoreanNumber ? getNumberWrittenKorean(randomNumber) : getNumberWrittenChinese(randomNumber);
         if (showEnglishWritten) {
             visibleDisplay.innerHTML = writtenNumber;
             hiddenDisplay.innerHTML = randomNumber;
@@ -49,7 +49,7 @@ function newTime() {
 
     let hours = getRandomBetweenInclusive(1, 12);
     let minutes = getRandomBetweenInclusive(0, 59);
-    let written = getNumberWrittenKorean(hours, true) + "시 " + getNumberWrittenChinese(minutes) + "분";
+    let written = getTimeWritten(hours, minute);
     let digits = hours.pad(2) + ":" + minutes.pad(2);
     if (getShowEnglishWritten()) {
         visibleDisplay.innerHTML = written;
@@ -59,6 +59,17 @@ function newTime() {
         hiddenDisplay.innerHTML = written;
     }
     hideAnswer();
+}
+
+function getTimeWritten(hours, minutes) {
+    let output = "";
+
+    output += getNumberWrittenKorean(hours, true) + "시";
+
+    if (minutes > 0) {
+        output += " " + getNumberWrittenChinese(minutes) + "분";
+    }
+    return output;
 }
 
 function getRandomBetweenInclusive(from, to) {
@@ -151,7 +162,10 @@ const numbersWrittenChinese = {
     13: "십",
     14: "백",
     15: "천",
-    16: "경"
+    16: "경",
+    17: "십",
+    18: "백",
+    19: "천"
 };
 
 
@@ -164,7 +178,7 @@ function getNumberWrittenChinese(number) {
     let currentChar = numberAsStringReversed.charAt(0);
     output = (currentChar > 0 ? numbersWrittenChinese[0][currentChar] : "") + output;
 
-    for (i = 1; i < numberAsStringReversed.length; i++) {
+    for (let i = 1; i < numberAsStringReversed.length; i++) {
         let currentChar = numberAsStringReversed.charAt(i);
 
         // 10^X-part, e.g. the 백 in 이백삼
@@ -192,7 +206,7 @@ function getNumberWrittenChinese(number) {
             ) ? numbersWrittenChinese[0][currentChar] : "") + output;
     }
     output = injectSpacing(output);
-    return output;
+    return output.trim();
 }
 
 // When writing Korean numbers, a space is added after every special break point (만, 억, etc.)
@@ -213,7 +227,7 @@ function injectSpacing(inputString) {
  * @returns {boolean}
  */
 function nextFourDigitsHaveNonZero(index, inputString) {
-    for (j = index + 1; j <= index + 3; j++) {
+    for (let j = index + 1; j <= index + 3; j++) {
         if (j < inputString.length && inputString.charAt(j) !== "0") {
             return true;
         }
@@ -277,3 +291,7 @@ Number.prototype.pad = function (size) {
     }
     return s;
 };
+
+exports.getNumberWrittenChinese = getNumberWrittenChinese
+exports.getNumberWrittenKorean = getNumberWrittenKorean
+exports.getTimeWritten = getTimeWritten

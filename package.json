@@ -1,0 +1,19 @@
+{
+  "name": "koreannumbertrainer",
+  "version": "1.0.0",
+  "description": "A little website used to learn Korean numbers and weekdays.",
+  "scripts": {
+    "test": "jest"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smmnloes/koreannumbertrainer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "http://koreantrainer.mloesch.it",
+  "devDependencies": {
+    "jest": "~26.2.2"
+  }
+}
