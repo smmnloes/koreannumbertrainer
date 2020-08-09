@@ -25,7 +25,7 @@ function newNumber() {
     let isKoreanNumber = document.querySelector('#koreanNumber').checked;
     try {
         answerDisplay.innerHTML = isKoreanNumber ? getNumberWrittenKorean(randomNumber) : getNumberWrittenChinese(randomNumber);
-        hideAnswer();
+        //hideAnswer();
     } catch (e) {
         answerDisplay.innerHTML = e.message;
         showAnswer();
@@ -122,7 +122,19 @@ const numbersWrittenChinese = {
     1: "십",
     2: "백",
     3: "천",
-    4: "만"
+    4: "만",
+    5: "십",
+    6: "백",
+    7: "천",
+    8: "억",
+    9: "십",
+    10: "백",
+    11: "천",
+    12: "조",
+    13: "십",
+    14: "백",
+    15: "천",
+    16: "경"
 };
 
 
@@ -136,18 +148,26 @@ function getNumberWrittenChinese(number) {
     output = (currentChar > 0 ? numbersWrittenChinese[0][currentChar] : "") + output;
 
     for (i = 1; i < numberAsStringReversed.length; i++) {
-        if (i > 4) {
-            let partialNumberFor10KString = numberAsString.substring(0, numberAsString.length - 4);
-            output = getNumberWrittenChinese(Number.parseInt(partialNumberFor10KString)) + output;
-            return output;
-        }
         let currentChar = numberAsStringReversed.charAt(i);
-        output = ((currentChar > 0 || i === 4) ? numbersWrittenChinese[i] : "") + output;
-        output = ((currentChar > 1 && (i !== 4 || i === numberAsStringReversed.length - 1)) ? numbersWrittenChinese[0][currentChar] : "") + output;
+
+        output = ((currentChar > 0 ||
+            ([4, 8, 12, 16].includes(i) &&
+                (!nextFourDigitsAreZero(i, numberAsStringReversed)))) ? numbersWrittenChinese[i] : "") + output;
+
+
+        output = ((currentChar > 1 || i === 8 || (i >= 4 && (i !== numberAsStringReversed.length - 1) && numberAsStringReversed.charAt(i + 1) !== "0")) ? numbersWrittenChinese[0][currentChar] : "") + output;
     }
     return output;
 }
 
+function nextFourDigitsAreZero(index, inputString) {
+    for (j = index + 1; j <= index + 3; j++) {
+        if (j < inputString.length && inputString.charAt(j) !== "0") {
+            return false;
+        }
+    }
+    return true;
+}
 
 function reverseString(str) {
     return str.split("").reverse().join("");
