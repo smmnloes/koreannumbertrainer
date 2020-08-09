@@ -156,24 +156,22 @@ function getNumberWrittenChinese(number) {
             currentChar > 0 ||
             // But if we have a break-point (e.g. 만 or 억), we need it even if it is zero: 10 0000 is 십만
             ([4, 8, 12, 16].includes(i) &&
-                // But only if we did not also reach the next bigger break point and we have no digits != 0 in the next
+                // But only if we did not also reach the next bigger break point and we have only zeros in the next
                 // four digits:
                 // 1 0000 0000 is 일억, no 만 here, but:  1 0010 0000 is 일억백만, here we need the 만
                 nextFourDigitsHaveNonZero(i, numberAsStringReversed))) ? numbersWrittenChinese[i] : "") + output;
 
-        // Multiplier for the 10^X-part, e.g. the 이 in 이십
+        // Multiplier for the 10^X-part, e.g. the 이 in 이백십
         output = (
             // If the multiplier is 1, then we omit it. Example: 110 is 백십, not 일백십
             (currentChar > 1
                 // But: Before 억, 일 is always used (special case)
                 || i === 8
-                // Also, if we are at a special break-point
+                // Also, the same exception as above: If we are at a special breakpoint and there are
+                // non-zero values in the next 4 digits to the left, we need the multiplier even if it is 1:
+                //
                 || ([4, 8, 12, 16].includes(i)
-                    // and there is a next digit
-                    && !!numberAsStringReversed.charAt(i + 1)
-                    // and it is different than zero, we need the multiplier.
-                    // Example: 11 0000 십일만. Here we need the 일 for the 만, because we have a non-zero
-                    && numberAsStringReversed.charAt(i + 1) !== "0"
+                    && nextFourDigitsHaveNonZero(i, numberAsStringReversed)
                     )) ? numbersWrittenChinese[0][currentChar] : "") + output;
     }
     return output;
