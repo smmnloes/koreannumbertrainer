@@ -39,7 +39,7 @@ function newTime() {
     let hours = getRandomBetweenInclusive(1, 12);
     let minutes = getRandomBetweenInclusive(0, 59);
 
-    displaySpan.innerHTML = hours.pad(2) + " : " + minutes.pad(2);
+    displaySpan.innerHTML = hours.pad(2) + ":" + minutes.pad(2);
     hideAnswer();
     answerDisplay.innerHTML = getNumberWrittenKorean(hours, true) + "시 " + getNumberWrittenChinese(minutes) + "분";
 }
