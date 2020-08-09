@@ -150,23 +150,48 @@ function getNumberWrittenChinese(number) {
     for (i = 1; i < numberAsStringReversed.length; i++) {
         let currentChar = numberAsStringReversed.charAt(i);
 
-        output = ((currentChar > 0 ||
+        // 10^X-part, e.g. the 백 in 이백삼
+        output = ((
+            // If we are 0, then we don't want the 10^X part. (e.g. second digit in 100)
+            currentChar > 0 ||
+            // But if we have a break-point (e.g. 만 or 억), we need it even if it is zero: 10 0000 is 십만
             ([4, 8, 12, 16].includes(i) &&
-                (!nextFourDigitsAreZero(i, numberAsStringReversed)))) ? numbersWrittenChinese[i] : "") + output;
+                // But only if we did not also reach the next bigger break point and we have no digits != 0 in the next
+                // four digits:
+                // 1 0000 0000 is 일억, no 만 here, but:  1 0010 0000 is 일억백만, here we need the 만
+                nextFourDigitsHaveNonZero(i, numberAsStringReversed))) ? numbersWrittenChinese[i] : "") + output;
 
-
-        output = ((currentChar > 1 || i === 8 || (i >= 4 && (i !== numberAsStringReversed.length - 1) && numberAsStringReversed.charAt(i + 1) !== "0")) ? numbersWrittenChinese[0][currentChar] : "") + output;
+        // Multiplier for the 10^X-part, e.g. the 이 in 이십
+        output = (
+            // If the multiplier is 1, then we omit it. Example: 110 is 백십, not 일백십
+            (currentChar > 1
+                // But: Before 억, 일 is always used (special case)
+                || i === 8
+                // Also, if we are at a special break-point
+                || ([4, 8, 12, 16].includes(i)
+                    // and there is a next digit
+                    && !!numberAsStringReversed.charAt(i + 1)
+                    // and it is different than zero, we need the multiplier.
+                    // Example: 11 0000 십일만. Here we need the 일 for the 만, because we have a non-zero
+                    && numberAsStringReversed.charAt(i + 1) !== "0"
+                    )) ? numbersWrittenChinese[0][currentChar] : "") + output;
     }
     return output;
 }
 
-function nextFourDigitsAreZero(index, inputString) {
+/**
+ * Checks if at least one of the next four digits adjacent to index has a value other than 0
+ * @param index
+ * @param inputString
+ * @returns {boolean}
+ */
+function nextFourDigitsHaveNonZero(index, inputString) {
     for (j = index + 1; j <= index + 3; j++) {
         if (j < inputString.length && inputString.charAt(j) !== "0") {
-            return false;
+            return true;
         }
     }
-    return true;
+    return false;
 }
 
 function reverseString(str) {
