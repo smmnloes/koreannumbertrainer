@@ -182,16 +182,28 @@ function getNumberWrittenChinese(number) {
         output = (
             // If the multiplier is 1, then we omit it. Example: 110 is 백십, not 일백십
             (currentChar > 1
-                // But: Before 억, 일 is always used (special case)
-                || i === 8
-                // Also, the same exception as above: If we are at a special breakpoint and there are
-                // non-zero values in the next 4 digits to the left, we need the multiplier even if it is 1:
+                // If we are at a special breakpoint and there are
+                // non-zero values in the next 4 digits to the left, or
+                // we are at the terminal digit and we are at a bigger breakpoint than 만,
+                // we need the multiplier even if it is 1:
                 //
-                || ([4, 8, 12, 16].includes(i)
-                    && nextFourDigitsHaveNonZero(i, numberAsStringReversed)
-                )) ? numbersWrittenChinese[0][currentChar] : "") + output;
+                || ([8, 12, 16].includes(i) && (numberAsStringReversed.length - 1 === i))
+                || ([4, 8, 12, 16].includes(i) && nextFourDigitsHaveNonZero(i, numberAsStringReversed))
+            ) ? numbersWrittenChinese[0][currentChar] : "") + output;
     }
+    output = injectSpacing(output);
     return output;
+}
+
+// When writing Korean numbers, a space is added after every special break point (만, 억, etc.)
+function injectSpacing(inputString) {
+    let tokens = [...inputString];
+    for (k = 0; k < tokens.length; k++) {
+        if ([numbersWrittenChinese[4], numbersWrittenChinese[8], numbersWrittenChinese[12], numbersWrittenChinese[16]].includes(tokens[k])) {
+            tokens.splice(++k, 0, " ");
+        }
+    }
+    return tokens.join("");
 }
 
 /**
