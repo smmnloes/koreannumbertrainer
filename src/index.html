@@ -27,7 +27,7 @@
                         <input type="number" id="numberToInput">
                     </div>
                     <div id="radioGroups">
-                        <div>
+                        <div id = "numberSystemChoices">
                             <label><input type="radio" id="chineseNumber" name="selectNumberSystem" checked>Chinese
                                 System</label>
                             <label><input type="radio" id="koreanNumber" name="selectNumberSystem">Korean System</label>
@@ -37,6 +37,14 @@
                                       checked>Show Digits</label>
                         <label><input type="radio" id="showWritten" name="selectNumberDirection">Show Written</label>
                     </div>
+                </div>
+            </div>
+            <div id="timeControls">
+                <button onclick="newTime()">Time</button>
+                <div id="timeControlOptions">
+                    <label><input type="radio" id="showTimeDigits" name="selectTimeDirection">Show Digits</label>
+                    <label><input type="radio" id="showTimeWritten" name="selectTimeDirection"
+                                  checked>Show Written</label>
                 </div>
             </div>
 
@@ -50,14 +58,6 @@
                 </div>
             </div>
 
-            <div id="timeControls">
-                <button onclick="newTime()">Time</button>
-                <div id="timeControlOptions">
-                    <label><input type="radio" id="showTimeDigits" name="selectTimeDirection">Show Digits</label>
-                    <label><input type="radio" id="showTimeWritten" name="selectTimeDirection"
-                                  checked>Show Written</label>
-                </div>
-            </div>
 
         </div>
     </div>

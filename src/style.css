@@ -8,6 +8,16 @@
     }
 }
 
+@media screen and (min-width: 1201px) and (max-width: 4000px) {
+    #app {
+        max-width: 80%;
+    }
+
+    div#content {
+        max-width: 80%;
+    }
+}
+
 
 #app h1 {
     text-align: center;
@@ -18,7 +28,6 @@
 
 #app {
     margin: auto;
-    max-width: 80%;
     margin-top: 5%;
     font-family: monospace;
 }
@@ -30,7 +39,7 @@
 }
 
 input {
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 .display {
@@ -49,7 +58,6 @@ label {
 
 #content {
     margin: auto;
-    max-width: 80%;
 }
 
 
@@ -108,4 +116,12 @@ button {
 
 #timeControlOptions {
     text-align: center;
+}
+
+#numberTo {
+    margin-top: 0.5rem;
+}
+
+#numberSystemChoices {
+    margin-bottom: 0.5rem;
 }
