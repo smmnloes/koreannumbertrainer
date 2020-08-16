@@ -130,7 +130,7 @@ const numbersWrittenKorean = {
 
 function getNumberWrittenKorean(number, useAbbreviated = false) {
     if (number > 99) {
-        throw new Error("Error! Only numbers < 99 exist in the Korean system.");
+        throw new Error("Error! Only numbers < 100 exist in the Korean system.");
     }
     const numberAsStringReversed = reverseString(number.toString());
 
