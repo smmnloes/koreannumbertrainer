@@ -180,6 +180,9 @@ const numbersWrittenChinese = {
 
 
 function getNumberWrittenChinese(number) {
+    if (number > 9999999999999999999 || number < 1) {
+        throw new Error("Only numbers between 1 and 9999999999999999999 supported.")
+    }
     const numberAsStringReversed = reverseString(number.toString());
 
     let output = "";
