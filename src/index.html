@@ -4,124 +4,61 @@
     <meta charset="UTF-8">
     <title>Korean Trainer</title>
     <script src="trainer.js"></script>
-    <style>
-        #app h1 {
-            text-align: center;
-            font-size: 3rem;
-            font-weight: normal;
-            margin-bottom: 7rem;
-        }
-
-        #app {
-            margin: auto;
-            max-width: 80%;
-            max-height: 50%;
-            margin-top: 5%;
-            font-size: 3rem;
-            font-family: monospace;
-        }
-
-        @media screen and (max-width: 1200px) {
-            #app {
-                max-width: 100%;
-            }
-
-            div#content {
-                max-width: 100%;
-            }
-        }
-
-        .numberinputs {
-            font-size: 2rem;
-            padding: 10px;
-            text-align: center;
-        }
-
-        input {
-            font-size: 1.6rem;
-        }
-
-        .display {
-            padding: 10px;
-            margin: auto;
-            max-width: 100%;
-            text-align: center;
-        }
-
-
-        label {
-            margin-right: 10px;
-        }
-
-
-        #content {
-            margin: auto;
-            max-width: 80%;
-        }
-
-        #buttons {
-            max-width: 80%;
-            margin: 2rem auto;
-            text-align: center;
-        }
-
-        #buttons button {
-            font-size: 2rem;
-            font-weight: bold;
-            border-radius: 0.1rem;
-            box-shadow: 1px 1px 2px darkgray;
-            margin: 1rem;
-        }
-
-        #options {
-            text-align: center;
-            font-size: 2rem;
-            margin-top: 2rem;
-        }
-
-        #direction {
-            margin-top: 4rem;
-        }
-
-        #displays {
-            border-style: solid;
-            border-radius: 5px;
-            max-width: 75%;
-            margin: auto;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen"/>
 </head>
 <body>
 <div id="app">
     <h1>Korean Trainer</h1>
     <div id="content">
         <div id="displays">
-            <div id="display" class="display"><span>&nbsp;</span></div>
-            <div id="answerDisplay" class="display" onclick="showAnswer()"><span>&nbsp;</span></div>
+            <div id="visibleDisplay" class="display"><span>&nbsp;</span></div>
+            <div id="hiddenDisplay" class="display" onclick="showAnswer()"><span>&nbsp;</span></div>
         </div>
-        <div id="buttons">
-            <button onclick="newNumber()">Number</button>
-            <button onclick="newWeekDay()">Weekday</button>
-            <button onclick="newTime()">Time</button>
-        </div>
-        <div id="numberFrom" class="numberinputs"><label for="numberFromInput"># From:</label><input type="number"
-                                                                                                     id="numberFromInput"
-                                                                                                     min="1">
-        </div>
-        <div id="numberTo" class="numberinputs"><label for="numberToInput"># To:</label><input type="number"
-                                                                                               id="numberToInput">
-        </div>
+        <div id="controls">
+            <div id="numberControls">
+                <button onclick="newNumber()">Number</button>
+                <div id="numberControlsOptions">
+                    <div id="numberFrom" class="numberinputs">
+                        <label for="numberFromInput">Min:</label>
+                        <input type="number" id="numberFromInput" min="1">
+                    </div>
+                    <div id="numberTo" class="numberinputs">
+                        <label for="numberToInput">Max:</label>
+                        <input type="number" id="numberToInput">
+                    </div>
+                    <div id="radioGroups">
+                        <div>
+                            <label><input type="radio" id="chineseNumber" name="selectNumberSystem" checked>Chinese
+                                System</label>
+                            <label><input type="radio" id="koreanNumber" name="selectNumberSystem">Korean System</label>
+                        </div>
 
-        <div id="options">
-            <div id="koreanOrChinese">
-                <label><input type="radio" id="chineseNumber" name="selectNumberSystem" checked>Chinese</label>
-                <label><input type="radio" id="koreanNumber" name="selectNumberSystem">Korean</label>
+                        <label><input type="radio" id="showDigits" name="selectNumberDirection"
+                                      checked>Show Digits</label>
+                        <label><input type="radio" id="showWritten" name="selectNumberDirection">Show Written</label>
+                    </div>
+                </div>
             </div>
-            <div id="direction">
-                <p>Show</p>
-                <label><input type="radio" id="showKoreanDigits" name="selectDirection" checked>Korean/Digits</label>
-                <label><input type="radio" id="showEnglishWritten" name="selectDirection">English/Written</label>
+
+            <div id="weekdayControls">
+                <button onclick="newWeekDay()">Weekday</button>
+                <div id="weekdayControlsOptions">
+                    <label><input type="radio" id="showWeekdayKorean" name="selectWeekdayDirection"
+                                  checked>Show Korean</label>
+                    <label><input type="radio" id="showWeekdayEnglish" name="selectWeekdayDirection">Show
+                        English</label>
+                </div>
             </div>
+
+            <div id="timeControls">
+                <button onclick="newTime()">Time</button>
+                <div id="timeControlOptions">
+                    <label><input type="radio" id="showTimeDigits" name="selectTimeDirection">Show Digits</label>
+                    <label><input type="radio" id="showTimeWritten" name="selectTimeDirection"
+                                  checked>Show Written</label>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

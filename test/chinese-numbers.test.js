@@ -11,7 +11,7 @@ const smallerThan10k = [
     {101: "백일"},
     {300: "삼백"},
     {311: "삼백십일"}
-]
+];
 
 const tenKAndAbove = [
     {10000: "만"},
@@ -21,7 +21,7 @@ const tenKAndAbove = [
     {110001: "십일만 일"},
     {1000000: "백만"},
     {10000000: "천만"}
-]
+];
 
 const oneMillionAndAbove = [
     {100000000: "일억"},
@@ -29,7 +29,7 @@ const oneMillionAndAbove = [
     {200000000: "이억"},
     {1100000000: "십일억"},
     {1101100000: "십일억 백십만"},
-]
+];
 
 const oneBillionAndAbove = [
     {1000000000000: "일조"},
@@ -37,7 +37,7 @@ const oneBillionAndAbove = [
     {11001000100000: "십일조 십억 십만"},
     {9000000000000: "구조"},
 
-]
+];
 
 const oneTrillionAndAbove = [
     {10000000000000000: "일경"},
@@ -45,38 +45,35 @@ const oneTrillionAndAbove = [
     {110010001000000000: "십일경 십조 십억"},
     {90000000000000000: "구경"},
 
-]
+];
 describe('Test chinese korean numbers', () => {
         it('Numbers < 10k', () => {
             smallerThan10k.forEach(function (run) {
                 expect(trainer.getNumberWrittenChinese(Object.keys(run)[0])).toEqual(Object.values(run)[0]);
             });
-        })
-    it('Numbers >= 10k', () => {
-        tenKAndAbove.forEach(function (run) {
-            expect(trainer.getNumberWrittenChinese(Object.keys(run)[0])).toEqual(Object.values(run)[0]);
         });
-    })
+        it('Numbers >= 10k', () => {
+            tenKAndAbove.forEach(function (run) {
+                expect(trainer.getNumberWrittenChinese(Object.keys(run)[0])).toEqual(Object.values(run)[0]);
+            });
+        });
 
-    it('Numbers >= 1Mio', () => {
-        oneMillionAndAbove.forEach(function (run) {
-            expect(trainer.getNumberWrittenChinese(Object.keys(run)[0])).toEqual(Object.values(run)[0]);
+        it('Numbers >= 1Mio', () => {
+            oneMillionAndAbove.forEach(function (run) {
+                expect(trainer.getNumberWrittenChinese(Object.keys(run)[0])).toEqual(Object.values(run)[0]);
+            });
         });
-    })
 
-    it('Numbers >= 1Bill', () => {
-        oneBillionAndAbove.forEach(function (run) {
-            expect(trainer.getNumberWrittenChinese(Object.keys(run)[0])).toEqual(Object.values(run)[0]);
+        it('Numbers >= 1Bill', () => {
+            oneBillionAndAbove.forEach(function (run) {
+                expect(trainer.getNumberWrittenChinese(Object.keys(run)[0])).toEqual(Object.values(run)[0]);
+            });
         });
-    })
 
         it('Numbers >= 1Trill', () => {
             oneTrillionAndAbove.forEach(function (run) {
                 expect(trainer.getNumberWrittenChinese(Object.keys(run)[0])).toEqual(Object.values(run)[0]);
             });
         })
-}
-
-
-
-)
+    }
+);

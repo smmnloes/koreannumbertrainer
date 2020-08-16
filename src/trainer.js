@@ -3,62 +3,72 @@ const DEFAULT_TO = 99;
 const MIN_VALUE_FROM = 1;
 
 function getVisibleDisplay() {
-    return document.querySelector('#display span');
+    return document.querySelector('#visibleDisplay span');
 }
 
 function getHiddenDisplay() {
-    return document.querySelector('#answerDisplay span');
+    return document.querySelector('#hiddenDisplay span');
 }
 
-function getShowEnglishWritten() {
-    return document.querySelector('#showEnglishWritten').checked;
+
+function hideAnswer() {
+    getHiddenDisplay().setAttribute('style', 'background-color: black')
+}
+
+function showAnswer() {
+    getHiddenDisplay().setAttribute('style', 'background-color: white')
+}
+
+function setDisplays(visibleValue, hiddenValue) {
+    getVisibleDisplay().innerHTML = visibleValue;
+    getHiddenDisplay().innerHTML = hiddenValue;
+    hideAnswer();
+}
+
+function getShowNumberWrittenOption() {
+    return document.querySelector('#showWritten').checked;
+}
+
+function getShowWeekdayEnglishOption() {
+    return document.querySelector('#showWeekdayEnglish').checked;
+}
+
+function getShowTimeWrittenOption() {
+    return document.querySelector('#showTimeWritten').checked;
+}
+
+function getNumberFrom() {
+    const numberFromInput = document.querySelector('#numberFromInput');
+    const numberFromUserInput = Number.parseInt(numberFromInput.value);
+    return isNaN(numberFromUserInput) || numberFromUserInput < MIN_VALUE_FROM ? DEFAULT_FROM : numberFromUserInput;
+}
+
+function getNumberTo() {
+    const numberToInput = document.querySelector('#numberToInput');
+    const numberToUserInput = Number.parseInt(numberToInput.value);
+    return isNaN(numberToUserInput) ? DEFAULT_TO : numberToUserInput;
 }
 
 function newNumber() {
-    let visibleDisplay = getVisibleDisplay();
-    let hiddenDisplay = getHiddenDisplay();
-    let numberFromInput = document.querySelector('#numberFromInput');
-    let numberToInput = document.querySelector('#numberToInput');
-
-    let numberFromUserInput = Number.parseInt(numberFromInput.value);
-    let numberFrom = isNaN(numberFromUserInput) || numberFromUserInput < MIN_VALUE_FROM ? DEFAULT_FROM : numberFromUserInput;
-    let numberToUserInput = Number.parseInt(numberToInput.value);
-    let numberTo = isNaN(numberToUserInput) ? DEFAULT_TO : numberToUserInput;
-    let randomNumber = getRandomBetweenInclusive(numberFrom, numberTo);
-    let isKoreanNumber = document.querySelector('#koreanNumber').checked;
-    let showEnglishWritten = getShowEnglishWritten();
+    const numberFrom = getNumberFrom();
+    const numberTo = getNumberTo();
+    const randomNumber = getRandomBetweenInclusive(numberFrom, numberTo);
+    const koreanNumberSystem = document.querySelector('#koreanNumber').checked;
+    const showWritten = getShowNumberWrittenOption();
     try {
-        let writtenNumber = isKoreanNumber ? getNumberWrittenKorean(randomNumber) : getNumberWrittenChinese(randomNumber);
-        if (showEnglishWritten) {
-            visibleDisplay.innerHTML = writtenNumber;
-            hiddenDisplay.innerHTML = randomNumber;
-        } else {
-            hiddenDisplay.innerHTML = writtenNumber;
-            visibleDisplay.innerHTML = randomNumber;
-        }
-        hideAnswer();
+        let writtenNumber = koreanNumberSystem ? getNumberWrittenKorean(randomNumber) : getNumberWrittenChinese(randomNumber);
+        showWritten ? setDisplays(writtenNumber, randomNumber) : setDisplays(randomNumber, writtenNumber);
     } catch (e) {
-        visibleDisplay.innerHTML = e.message;
-        hiddenDisplay.innerHTML = "";
+        setDisplays(e.message, "");
     }
 }
 
 function newTime() {
-    let visibleDisplay = getVisibleDisplay();
-    let hiddenDisplay = getHiddenDisplay();
-
     let hours = getRandomBetweenInclusive(1, 12);
     let minutes = getRandomBetweenInclusive(0, 59);
     let written = getTimeWritten(hours, minutes);
     let digits = hours.pad(2) + ":" + minutes.pad(2);
-    if (getShowEnglishWritten()) {
-        visibleDisplay.innerHTML = written;
-        hiddenDisplay.innerHTML = digits;
-    } else {
-        visibleDisplay.innerHTML = digits;
-        hiddenDisplay.innerHTML = written;
-    }
-    hideAnswer();
+    getShowTimeWrittenOption() ? setDisplays(written, digits) : setDisplays(digits, written);
 }
 
 function getTimeWritten(hours, minutes) {
@@ -170,8 +180,7 @@ const numbersWrittenChinese = {
 
 
 function getNumberWrittenChinese(number) {
-    let numberAsString = number.toString();
-    const numberAsStringReversed = reverseString(numberAsString);
+    const numberAsStringReversed = reverseString(number.toString());
 
     let output = "";
 
@@ -180,48 +189,42 @@ function getNumberWrittenChinese(number) {
 
     for (let i = 1; i < numberAsStringReversed.length; i++) {
         let currentChar = numberAsStringReversed.charAt(i);
-
-        // 10^X-part, e.g. the 백 in 이백삼
-        output = ((
+        const isBreakPoint = [4, 8, 12, 16].includes(i);
+        if (isBreakPoint) {
+            output = " " + output;
+        }
+        //// 10^X-part, e.g. the 백 in 이백삼
+        let new10XPart = (
             // If we are 0, then we don't want the 10^X part. (e.g. second digit in 100)
             currentChar > 0 ||
             // But if we have a break-point (e.g. 만 or 억), we need it even if it is zero: 10 0000 is 십만
-            ([4, 8, 12, 16].includes(i) &&
+            (isBreakPoint &&
                 // But only if we did not also reach the next bigger break point and we have only zeros in the next
                 // four digits:
                 // 1 0000 0000 is 일억, no 만 here, but:  1 0010 0000 is 일억백만, here we need the 만
-                nextFourDigitsHaveNonZero(i, numberAsStringReversed))) ? numbersWrittenChinese[i] : "") + output;
+                nextFourDigitsHaveNonZero(i, numberAsStringReversed))) ? numbersWrittenChinese[i] : "";
 
-        // Multiplier for the 10^X-part, e.g. the 이 in 이백십
-        output = (
-            // If the multiplier is 1, then we omit it. Example: 110 is 백십, not 일백십
-            (currentChar > 1
-                // If we are at a special breakpoint and there are
-                // non-zero values in the next 4 digits to the left, or
-                // we are at the terminal digit and we are at a bigger breakpoint than 만,
-                // we need the multiplier even if it is 1:
-                //
-                || ([8, 12, 16].includes(i) && (numberAsStringReversed.length - 1 === i))
-                || ([4, 8, 12, 16].includes(i) && nextFourDigitsHaveNonZero(i, numberAsStringReversed))
-            ) ? numbersWrittenChinese[0][currentChar] : "") + output;
+        // Prepend new part
+        output = new10XPart + output;
+
+        //// Multiplier for the 10^X-part, e.g. the 이 in 이백십
+        let new10XMultiplierPart = (currentChar > 1
+            // If we are at a special breakpoint and there are
+            // non-zero values in the next 4 digits to the left, or
+            // we are at the terminal digit and we are at a bigger breakpoint than 만,
+            // we need the multiplier even if it is 1:
+            //
+            || ([8, 12, 16].includes(i) && (numberAsStringReversed.length - 1 === i))
+            || (isBreakPoint && nextFourDigitsHaveNonZero(i, numberAsStringReversed))
+        ) ? numbersWrittenChinese[0][currentChar] : "";
+
+        output = new10XMultiplierPart + output;
     }
-    output = injectSpacing(output);
     return output.trim();
 }
 
-// When writing Korean numbers, a space is added after every special break point (만, 억, etc.)
-function injectSpacing(inputString) {
-    let tokens = [...inputString];
-    for (k = 0; k < tokens.length; k++) {
-        if ([numbersWrittenChinese[4], numbersWrittenChinese[8], numbersWrittenChinese[12], numbersWrittenChinese[16]].includes(tokens[k])) {
-            tokens.splice(++k, 0, " ");
-        }
-    }
-    return tokens.join("");
-}
-
 /**
- * Checks if at least one of the next four digits adjacent to index has a value other than 0
+ * Checks if at least one of the next four digits adjacent left to index has a value other than 0
  * @param index
  * @param inputString
  * @returns {boolean}
@@ -253,9 +256,6 @@ const weekDays = {
 let lastWeekdayRandom;
 
 function newWeekDay() {
-    let hiddenDisplay = getHiddenDisplay();
-    let visibleDisplay = getVisibleDisplay();
-
     let random;
     do {
         random = getRandomBetweenInclusive(0, 6);
@@ -263,26 +263,10 @@ function newWeekDay() {
     while (random === lastWeekdayRandom);
 
     lastWeekdayRandom = random;
-
     let randomWeekDayEnglish = Object.keys(weekDays)[random];
-
-    if (getShowEnglishWritten()) {
-        visibleDisplay.innerHTML = randomWeekDayEnglish;
-        hiddenDisplay.innerHTML = weekDays[randomWeekDayEnglish];
-    } else {
-        hiddenDisplay.innerHTML = randomWeekDayEnglish;
-        visibleDisplay.innerHTML = weekDays[randomWeekDayEnglish];
-    }
-    hideAnswer();
+    getShowWeekdayEnglishOption() ? setDisplays(randomWeekDayEnglish, weekDays[randomWeekDayEnglish]) : setDisplays(weekDays[randomWeekDayEnglish], randomWeekDayEnglish);
 }
 
-function hideAnswer() {
-    getHiddenDisplay().setAttribute('style', 'background-color: black')
-}
-
-function showAnswer() {
-    getHiddenDisplay().setAttribute('style', 'background-color: white')
-}
 
 Number.prototype.pad = function (size) {
     let s = String(this);
@@ -292,6 +276,6 @@ Number.prototype.pad = function (size) {
     return s;
 };
 
-exports.getNumberWrittenChinese = getNumberWrittenChinese
-exports.getNumberWrittenKorean = getNumberWrittenKorean
-exports.getTimeWritten = getTimeWritten
+exports.getNumberWrittenChinese = getNumberWrittenChinese;
+exports.getNumberWrittenKorean = getNumberWrittenKorean;
+exports.getTimeWritten = getTimeWritten;

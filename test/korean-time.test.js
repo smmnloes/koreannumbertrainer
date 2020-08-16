@@ -6,7 +6,7 @@ const simple = [
     {hours: 2, minutes: 5, expected: "두시 오분"},
     {hours: 12, minutes: 25, expected: "열두시 이십오분"},
 
-]
+];
 
 describe('Test korean time', () => {
         it('Simple stuff', () => {
@@ -15,4 +15,4 @@ describe('Test korean time', () => {
             });
         })
     }
-)
+);
