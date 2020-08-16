@@ -75,7 +75,7 @@ button {
 
 #displays {
     border-style: solid;
-    border-radius: 5px;
+    border-radius: 5px 5px 0 0;
     margin: auto;
     font-size: 2rem;
 }
@@ -109,6 +109,7 @@ button {
     grid-template-columns: 20% 80%;
     border-style: solid;
     border-width: 2px;
+    border-radius: 0 0 5px 5px;
 }
 
 #weekdayControlsOptions {
