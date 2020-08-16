@@ -88,6 +88,8 @@ button {
     padding: 1rem;
     display: grid;
     grid-template-columns: 20% 80%;
+    border-style: solid;
+    border-width: 2px;
 }
 
 #numberControlsOptions {
@@ -102,6 +104,8 @@ button {
     padding: 1rem;
     display: grid;
     grid-template-columns: 20% 80%;
+    border-style: solid;
+    border-width: 2px;
 }
 
 #weekdayControlsOptions {
@@ -112,6 +116,8 @@ button {
     padding: 1rem;
     display: grid;
     grid-template-columns: 20% 80%;
+    border-style: solid;
+    border-width: 0 2px;
 }
 
 #timeControlOptions {
