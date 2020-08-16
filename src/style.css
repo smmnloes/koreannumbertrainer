@@ -41,7 +41,7 @@
 }
 
 input {
-    font-size: 1rem;
+    font-size: 1.3rem;
 }
 
 .display {
@@ -55,6 +55,7 @@ input {
 label {
     margin-right: 10px;
     font-size: 1.3rem;
+    font-weight: bold;
 }
 
 
@@ -64,7 +65,8 @@ label {
 
 
 button {
-    font-size: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
     border-radius: 0.1rem;
     box-shadow: 1px 1px 2px darkgray;
     min-height: 4rem;
