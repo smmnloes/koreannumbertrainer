@@ -6,6 +6,8 @@
     div#content {
         max-width: 100%;
     }
+
+
 }
 
 @media screen and (min-width: 1201px) and (max-width: 4000px) {
@@ -65,19 +67,18 @@ button {
     font-size: 1rem;
     border-radius: 0.1rem;
     box-shadow: 1px 1px 2px darkgray;
+    min-height: 4rem;
 }
 
 
 #displays {
     border-style: solid;
     border-radius: 5px;
-    max-width: 75%;
     margin: auto;
     font-size: 2rem;
 }
 
 #controls {
-    max-width: 75%;
     margin: auto;
     display: grid;
     grid-template-columns: 100%;
