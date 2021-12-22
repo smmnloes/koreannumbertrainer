@@ -279,6 +279,16 @@ Number.prototype.pad = function (size) {
     return s;
 };
 
+// mail address spam protection
+window.addEventListener("DOMContentLoaded", function() {
+document.getElementById("email-link").addEventListener("click",
+    function()
+        {
+            this.setAttribute("href",this.getAttribute("href").replace("blabla.com","mloesch.it"))
+        }
+)
+})
+
 exports.getNumberWrittenChinese = getNumberWrittenChinese;
 exports.getNumberWrittenKorean = getNumberWrittenKorean;
 exports.getTimeWritten = getTimeWritten;
