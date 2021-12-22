@@ -20,6 +20,9 @@
     }
 }
 
+body {
+    font-family: monospace;
+}
 
 #app h1 {
     text-align: center;
@@ -31,7 +34,6 @@
 #app {
     margin: auto;
     margin-top: 5%;
-    font-family: monospace;
 }
 
 
@@ -78,6 +80,17 @@ button {
     border-radius: 5px 5px 0 0;
     margin: auto;
     font-size: 2rem;
+}
+
+#footer {
+    margin-top: 3rem;
+    text-align: center;
+    font-size: 2rem;
+}
+
+#footer a {
+    color: black;
+    text-decoration: none;
 }
 
 #controls {
