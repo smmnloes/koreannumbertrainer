@@ -193,27 +193,27 @@ export function getNumberWrittenChinese (number) {
     }
     /// / 10^X-part, e.g. the 백 in 이백삼
     const new10XPart = (
-    // If we are 0, then we don't want the 10^X part. (e.g. second digit in 100)
+      // If we are 0, then we don't want the 10^X part. (e.g. second digit in 100)
       currentChar > 0 ||
-            // But if we have a break-point (e.g. 만 or 억), we need it even if it is zero: 10 0000 is 십만
-            (isBreakPoint &&
-                // But only if we did not also reach the next bigger break point and we have only zeros in the next
-                // four digits:
-                // 1 0000 0000 is 일억, no 만 here, but:  1 0010 0000 is 일억백만, here we need the 만
-                nextFourDigitsHaveNonZero(i, numberAsStringReversed))) ? numbersWrittenChinese[i] : ''
+      // But if we have a break-point (e.g. 만 or 억), we need it even if it is zero: 10 0000 is 십만
+      (isBreakPoint &&
+        // But only if we did not also reach the next bigger break point and we have only zeros in the next
+        // four digits:
+        // 1 0000 0000 is 일억, no 만 here, but:  1 0010 0000 is 일억백만, here we need the 만
+        nextFourDigitsHaveNonZero(i, numberAsStringReversed))) ? numbersWrittenChinese[i] : ''
 
     // Prepend new part
     output = new10XPart + output
 
     /// / Multiplier for the 10^X-part, e.g. the 이 in 이백십
     const new10XMultiplierPart = (currentChar > 1 ||
-            // If we are at a special breakpoint and there are
-            // non-zero values in the next 4 digits to the left, or
-            // we are at the terminal digit and we are at a bigger breakpoint than 만,
-            // we need the multiplier even if it is 1:
-            //
-            ([8, 12, 16].includes(i) && (numberAsStringReversed.length - 1 === i)) ||
-            (isBreakPoint && nextFourDigitsHaveNonZero(i, numberAsStringReversed))
+      // If we are at a special breakpoint and there are
+      // non-zero values in the next 4 digits to the left, or
+      // we are at the terminal digit and we are at a bigger breakpoint than 만,
+      // we need the multiplier even if it is 1:
+      //
+      ([8, 12, 16].includes(i) && (numberAsStringReversed.length - 1 === i)) ||
+      (isBreakPoint && nextFourDigitsHaveNonZero(i, numberAsStringReversed))
     ) ? numbersWrittenChinese[0][currentChar] : ''
 
     output = new10XMultiplierPart + output
@@ -276,3 +276,21 @@ document.getElementById('newNumberButton').addEventListener('click', newNumber)
 document.getElementById('newTimeButton').addEventListener('click', newTime)
 document.getElementById('newWeekDayButton').addEventListener('click', newWeekDay)
 document.getElementById('hiddenDisplay').addEventListener('click', showAnswer)
+
+const tabsAndControls = [
+  [document.getElementById('numbersTab'), document.getElementById('numberControls')],
+  [document.getElementById('weekdaysTab'), document.getElementById('weekdayControls')],
+  [document.getElementById('timeTab'), document.getElementById('timeControls')]
+]
+const selectTab = (tab, control) => {
+  tab.classList.add('selected')
+  control.classList.add('selected')
+  tabsAndControls.forEach(([otherTab, otherControl]) => {
+    if (tab !== otherTab) {
+      otherTab.classList.remove('selected')
+      otherControl.classList.remove('selected')
+    }
+  })
+}
+
+tabsAndControls.forEach(([tab, control]) => tab.addEventListener('click', () => selectTab(tab, control)))

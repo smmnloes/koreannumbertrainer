@@ -10,53 +10,84 @@
 <div id="app">
     <h1>Korean Trainer</h1>
     <div id="content">
+        <div id="tabs" class="tabs">
+            <div id="numbersTab" class="selected">Numbers</div>
+            <div id="weekdaysTab">Weekdays</div>
+            <div id="timeTab">Time</div>
+        </div>
         <div id="displays">
             <div class="display" id="visibleDisplay"><span>Click a button</span></div>
             <div class="display" id="hiddenDisplay"><span> to start...</span></div>
         </div>
         <div id="controls">
-            <div id="numberControls">
-                <button id="newNumberButton">Number</button>
-                <div id="numberControlsOptions">
-                    <div class="numberinputs" id="numberFrom">
+            <div id="numberControls" class="controlsContainer selected">
+                <div class="controlsOptions">
+                    <div id="numberFrom">
                         <label for="numberFromInput">Min:</label>
                         <input id="numberFromInput" min="1" placeholder="1" type="number">
                     </div>
-                    <div class="numberinputs" id="numberTo">
+                    <div id="numberTo">
                         <label for="numberToInput">Max:</label>
                         <input id="numberToInput" placeholder="9999999999999999999" type="number">
                     </div>
-                    <div id="radioGroups">
-                        <div id="numberSystemChoices">
-                            <label><input checked id="chineseNumber" name="selectNumberSystem" type="radio">Chinese
-                                System</label>
-                            <label><input id="koreanNumber" name="selectNumberSystem" type="radio">Korean System</label>
+                    <div class="radioGrid">
+                        <div class="radioSelectionContainer">
+                            <span>Number system</span>
+                            <div class="radioSelection">
+                                <input checked id="chineseNumber" name="selectNumberSystem" type="radio">
+                                <label for="chineseNumber">Chinese</label>
+                                <input id="koreanNumber" name="selectNumberSystem" type="radio">
+                                <label for="koreanNumber">Korean</label>
+                            </div>
                         </div>
-
-                        <label><input checked id="showDigits" name="selectNumberDirection"
-                                      type="radio">Show Digits</label>
-                        <label><input id="showWritten" name="selectNumberDirection" type="radio">Show Written</label>
+                        <div class="radioSelectionContainer">
+                            <span>Reveal</span>
+                            <div class="radioSelection">
+                                <input checked id="showDigits" name="selectNumberDirection"
+                                       type="radio">
+                                <label for="showDigits">Digits</label>
+                                <input id="showWritten" name="selectNumberDirection" type="radio">
+                                <label for="showWritten">Written</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <button id="newNumberButton">Number</button>
             </div>
-            <div id="timeControls">
-                <button id="newTimeButton">Time</button>
-                <div id="timeControlOptions">
-                    <label><input checked id="showTimeDigits" name="selectTimeDirection" type="radio">Show
-                        Digits</label>
-                    <label><input id="showTimeWritten" name="selectTimeDirection" type="radio"
-                    >Show Written</label>
+            <div id="timeControls" class="controlsContainer">
+                <div class="controlsOptions">
+                    <div class="radioGrid">
+                        <div class="radioSelectionContainer">
+                            <span>Reveal</span>
+                            <div class="radioSelection">
+                                <label><input checked id="showTimeDigits" name="selectTimeDirection" type="radio">Digits</label>
+                                <label><input id="showTimeWritten" name="selectTimeDirection" type="radio"
+                                >Written</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <button id="newTimeButton">Time</button>
+
+
             </div>
 
-            <div id="weekdayControls">
-                <button id="newWeekDayButton">Weekday</button>
-                <div id="weekdayControlsOptions">
-                    <label><input checked id="showWeekdayKorean" name="selectWeekdayDirection"
-                                  type="radio">Show Korean</label>
-                    <label><input id="showWeekdayEnglish" name="selectWeekdayDirection" type="radio">Show
-                        English</label>
+            <div id="weekdayControls" class="controlsContainer">
+                <div class="controlsOptions">
+                    <div class="radioGrid">
+                        <div class="radioSelectionContainer">
+                            <span>Reveal</span>
+                            <div class="radioSelection">
+                                <input checked id="showWeekdayKorean" name="selectWeekdayDirection"
+                                       type="radio">
+                                <label for="showWeekdayKorean">Korean</label>
+                                <input id="showWeekdayEnglish" name="selectWeekdayDirection" type="radio">
+                                <label for="showWeekdayEnglish">English</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <button id="newWeekDayButton">Weekday</button>
             </div>
 
 
