@@ -12,11 +12,11 @@
     <div id="content">
         <div id="displays">
             <div class="display" id="visibleDisplay"><span>Click a button</span></div>
-            <div class="display" id="hiddenDisplay" onclick="showAnswer()"><span> to start...</span></div>
+            <div class="display" id="hiddenDisplay"><span> to start...</span></div>
         </div>
         <div id="controls">
             <div id="numberControls">
-                <button onclick="newNumber()">Number</button>
+                <button id="newNumberButton">Number</button>
                 <div id="numberControlsOptions">
                     <div class="numberinputs" id="numberFrom">
                         <label for="numberFromInput">Min:</label>
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div id="timeControls">
-                <button onclick="newTime()">Time</button>
+                <button id="newTimeButton">Time</button>
                 <div id="timeControlOptions">
                     <label><input checked id="showTimeDigits" name="selectTimeDirection" type="radio">Show
                         Digits</label>
@@ -50,7 +50,7 @@
             </div>
 
             <div id="weekdayControls">
-                <button onclick="newWeekDay()">Weekday</button>
+                <button id="newWeekDayButton">Weekday</button>
                 <div id="weekdayControlsOptions">
                     <label><input checked id="showWeekdayKorean" name="selectWeekdayDirection"
                                   type="radio">Show Korean</label>

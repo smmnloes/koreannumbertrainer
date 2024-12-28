@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A little website used to learn Korean numbers and weekdays.",
   "scripts": {
-    "test": "node --test",
+    "test": "node --import ./node-test-setup.js --test",
     "format": "standard --fix"
   },
   "devDependencies": {

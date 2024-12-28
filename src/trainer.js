@@ -271,3 +271,8 @@ Number.prototype.pad = function (size) {
   }
   return s
 }
+
+document.getElementById('newNumberButton').addEventListener('click', newNumber)
+document.getElementById('newTimeButton').addEventListener('click', newTime)
+document.getElementById('newWeekDayButton').addEventListener('click', newWeekDay)
+document.getElementById('hiddenDisplay').addEventListener('click', showAnswer)
