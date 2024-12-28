@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "A little website used to learn Korean numbers and weekdays.",
   "scripts": {
-    "test": "jest"
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2"
   },
   "type": "module",
   "repository": {
@@ -12,8 +15,5 @@
   },
   "author": "",
   "license": "ISC",
-  "homepage": "http://koreantrainer.mloesch.it",
-  "devDependencies": {
-    "jest": "~26.2.2"
-  }
+  "homepage": "http://koreantrainer.mloesch.it"
 }

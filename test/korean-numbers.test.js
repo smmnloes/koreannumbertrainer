@@ -1,5 +1,6 @@
-const trainer = require("../src/trainer");
-
+import {getNumberWrittenKorean} from "../src/trainer.js";
+import {describe, it} from "node:test";
+import assert from "node:assert";
 
 const simple = [
     {1: "하나"},
@@ -11,7 +12,7 @@ const simple = [
 describe('Test korean korean numbers', () => {
         it('Numbers < 10k', () => {
             simple.forEach(function (run) {
-                expect(trainer.getNumberWrittenKorean(Object.keys(run)[0])).toEqual(Object.values(run)[0]);
+                assert.equal(getNumberWrittenKorean(Object.keys(run)[0]), Object.values(run)[0]);
             });
         })
     }

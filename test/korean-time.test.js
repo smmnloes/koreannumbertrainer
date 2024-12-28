@@ -1,4 +1,6 @@
-const trainer = require("../src/trainer");
+import {describe, it} from 'node:test'
+import {getTimeWritten} from "../src/trainer.js";
+import assert from "node:assert";
 
 
 const simple = [
@@ -11,7 +13,7 @@ const simple = [
 describe('Test korean time', () => {
         it('Simple stuff', () => {
             simple.forEach(function (run) {
-                expect(trainer.getTimeWritten(run.hours, run.minutes)).toEqual(run.expected);
+                assert.equal(getTimeWritten(run.hours, run.minutes), run.expected);
             });
         })
     }

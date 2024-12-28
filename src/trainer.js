@@ -71,7 +71,7 @@ function newTime() {
     getShowTimeWrittenOption() ? setDisplays(written, digits) : setDisplays(digits, written);
 }
 
-function getTimeWritten(hours, minutes) {
+export function getTimeWritten(hours, minutes) {
     let output = "";
 
     output += getNumberWrittenKorean(hours, true) + "시";
@@ -128,7 +128,7 @@ const numbersWrittenKorean = {
 };
 
 
-function getNumberWrittenKorean(number, useAbbreviated = false) {
+export function getNumberWrittenKorean(number, useAbbreviated = false) {
     if (number > 99) {
         throw new Error("Error! Only numbers < 100 exist in the Korean system.");
     }
@@ -179,7 +179,7 @@ const numbersWrittenChinese = {
 };
 
 
-function getNumberWrittenChinese(number) {
+export function getNumberWrittenChinese(number) {
     if (number > 9999999999999999999 || number < 1) {
         throw new Error("Only numbers between 1 and 9999999999999999999 supported.")
     }
@@ -278,17 +278,3 @@ Number.prototype.pad = function (size) {
     }
     return s;
 };
-
-// mail address spam protection
-window.addEventListener("DOMContentLoaded", function() {
-document.getElementById("email-link").addEventListener("click",
-    function()
-        {
-            this.setAttribute("href",this.getAttribute("href").replace("blabla.com","mloesch.it"))
-        }
-)
-})
-
-exports.getNumberWrittenChinese = getNumberWrittenChinese;
-exports.getNumberWrittenKorean = getNumberWrittenKorean;
-exports.getTimeWritten = getTimeWritten;

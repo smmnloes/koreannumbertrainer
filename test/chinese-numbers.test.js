@@ -1,4 +1,6 @@
-const trainer = require("../src/trainer");
+import {getNumberWrittenChinese} from "../src/trainer.js";
+import {describe, it} from "node:test";
+import assert from "node:assert";
 
 
 const smallerThan10k = [
@@ -49,30 +51,30 @@ const oneTrillionAndAbove = [
 describe('Test chinese korean numbers', () => {
         it('Numbers < 10k', () => {
             smallerThan10k.forEach(function (run) {
-                expect(trainer.getNumberWrittenChinese(Object.keys(run)[0])).toEqual(Object.values(run)[0]);
+                assert.equal(getNumberWrittenChinese(Object.keys(run)[0]), Object.values(run)[0])
             });
         });
         it('Numbers >= 10k', () => {
             tenKAndAbove.forEach(function (run) {
-                expect(trainer.getNumberWrittenChinese(Object.keys(run)[0])).toEqual(Object.values(run)[0]);
+                assert.equal(getNumberWrittenChinese(Object.keys(run)[0]), Object.values(run)[0])
             });
         });
 
         it('Numbers >= 1Mio', () => {
             oneMillionAndAbove.forEach(function (run) {
-                expect(trainer.getNumberWrittenChinese(Object.keys(run)[0])).toEqual(Object.values(run)[0]);
+                assert.equal(getNumberWrittenChinese(Object.keys(run)[0]), Object.values(run)[0]);
             });
         });
 
         it('Numbers >= 1Bill', () => {
             oneBillionAndAbove.forEach(function (run) {
-                expect(trainer.getNumberWrittenChinese(Object.keys(run)[0])).toEqual(Object.values(run)[0]);
+                assert.equal(getNumberWrittenChinese(Object.keys(run)[0]), Object.values(run)[0]);
             });
         });
 
         it('Numbers >= 1Trill', () => {
             oneTrillionAndAbove.forEach(function (run) {
-                expect(trainer.getNumberWrittenChinese(Object.keys(run)[0])).toEqual(Object.values(run)[0]);
+                assert.equal(getNumberWrittenChinese(Object.keys(run)[0]), Object.values(run)[0]);
             });
         })
     }
