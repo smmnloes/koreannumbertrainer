@@ -4,56 +4,57 @@
     <meta charset="UTF-8">
     <title>Korean Trainer</title>
     <script src="trainer.js" type="module"></script>
-    <link rel="stylesheet" type="text/css" href="style.css" media="screen"/>
+    <link href="style.css" media="screen" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="app">
     <h1>Korean Trainer</h1>
     <div id="content">
         <div id="displays">
-            <div id="visibleDisplay" class="display"><span>Click a button</span></div>
-            <div id="hiddenDisplay" class="display" onclick="showAnswer()"><span> to start...</span></div>
+            <div class="display" id="visibleDisplay"><span>Click a button</span></div>
+            <div class="display" id="hiddenDisplay" onclick="showAnswer()"><span> to start...</span></div>
         </div>
         <div id="controls">
             <div id="numberControls">
                 <button onclick="newNumber()">Number</button>
                 <div id="numberControlsOptions">
-                    <div id="numberFrom" class="numberinputs">
+                    <div class="numberinputs" id="numberFrom">
                         <label for="numberFromInput">Min:</label>
-                        <input type="number" id="numberFromInput" min="1" placeholder="1">
+                        <input id="numberFromInput" min="1" placeholder="1" type="number">
                     </div>
-                    <div id="numberTo" class="numberinputs">
+                    <div class="numberinputs" id="numberTo">
                         <label for="numberToInput">Max:</label>
-                        <input type="number" id="numberToInput" placeholder="9999999999999999999">
+                        <input id="numberToInput" placeholder="9999999999999999999" type="number">
                     </div>
                     <div id="radioGroups">
-                        <div id = "numberSystemChoices">
-                            <label><input type="radio" id="chineseNumber" name="selectNumberSystem" checked>Chinese
+                        <div id="numberSystemChoices">
+                            <label><input checked id="chineseNumber" name="selectNumberSystem" type="radio">Chinese
                                 System</label>
-                            <label><input type="radio" id="koreanNumber" name="selectNumberSystem">Korean System</label>
+                            <label><input id="koreanNumber" name="selectNumberSystem" type="radio">Korean System</label>
                         </div>
 
-                        <label><input type="radio" id="showDigits" name="selectNumberDirection"
-                                      checked>Show Digits</label>
-                        <label><input type="radio" id="showWritten" name="selectNumberDirection">Show Written</label>
+                        <label><input checked id="showDigits" name="selectNumberDirection"
+                                      type="radio">Show Digits</label>
+                        <label><input id="showWritten" name="selectNumberDirection" type="radio">Show Written</label>
                     </div>
                 </div>
             </div>
             <div id="timeControls">
                 <button onclick="newTime()">Time</button>
                 <div id="timeControlOptions">
-                    <label><input type="radio" id="showTimeDigits" name="selectTimeDirection" checked>Show Digits</label>
-                    <label><input type="radio" id="showTimeWritten" name="selectTimeDirection"
-                                  >Show Written</label>
+                    <label><input checked id="showTimeDigits" name="selectTimeDirection" type="radio">Show
+                        Digits</label>
+                    <label><input id="showTimeWritten" name="selectTimeDirection" type="radio"
+                    >Show Written</label>
                 </div>
             </div>
 
             <div id="weekdayControls">
                 <button onclick="newWeekDay()">Weekday</button>
                 <div id="weekdayControlsOptions">
-                    <label><input type="radio" id="showWeekdayKorean" name="selectWeekdayDirection"
-                                  checked>Show Korean</label>
-                    <label><input type="radio" id="showWeekdayEnglish" name="selectWeekdayDirection">Show
+                    <label><input checked id="showWeekdayKorean" name="selectWeekdayDirection"
+                                  type="radio">Show Korean</label>
+                    <label><input id="showWeekdayEnglish" name="selectWeekdayDirection" type="radio">Show
                         English</label>
                 </div>
             </div>
@@ -65,7 +66,7 @@
 <div id="footer">
     <p>
         <a href="https://github.com/smmnloes/koreannumbertrainer" target="_blank">
-            <img src="GitHub-Mark-64px.png" alt="github-logo"/>
+            <img alt="github-logo" src="GitHub-Mark-64px.png"/>
         </a>
     </p>
 

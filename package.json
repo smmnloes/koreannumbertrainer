@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "description": "A little website used to learn Korean numbers and weekdays.",
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "format": "standard --fix"
   },
   "devDependencies": {
-    "@types/node": "^22.10.2"
+    "@types/node": "^22.10.2",
+    "standard": "^17.1.2"
   },
   "type": "module",
   "repository": {
