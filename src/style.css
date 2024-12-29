@@ -1,42 +1,24 @@
-@media screen and (max-width: 1200px) {
-    #app {
-        max-width: 100%;
-    }
-
-    div#content {
-        max-width: 100%;
-    }
-
-
-}
-
-@media screen and (min-width: 1201px) and (max-width: 4000px) {
-    #app {
-        max-width: 80%;
-    }
-
-    div#content {
-        max-width: 80%;
-    }
-}
-
 body {
     font-family: monospace;
-    font-size: 20px;
+    font-size: 30px;
 }
 
 body input {
-    font-size: 20px;
+    font-size: 30px;
+    border-radius: 10px;
+    border-style: none;
+    padding: 10px;
+    text-align: center;
 }
 
 body button {
-    font-size: 20px;
+    font-size: 30px;
 }
 
 #app h1 {
     text-align: center;
     font-weight: normal;
-    margin-bottom: 7rem;
+    margin-bottom: 80px;
 }
 
 #app {
@@ -53,26 +35,29 @@ body button {
 }
 
 
-
-
 #content {
+    background-color: #c46275;
     margin: auto;
+    border-radius: 20px;
+    max-width: 1000px;
+    width: 90%;
+    box-shadow: 5px 5px 20px rgba(0,0,0,0.3);
 }
 
 
 button {
     font-weight: bold;
     border-radius: 1rem;
-    box-shadow: 1px 1px 2px darkgray;
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.4);
     border-style: none;
 }
 
 
 #displays {
-    border-style: solid;
-    border-radius: 5px 5px 0 0;
-    margin: auto;
     font-size: 2.5rem;
+    margin: 80px 60px 30px;
+    border-radius: 15px;
+    background-color: white;
 }
 
 #footer {
@@ -87,20 +72,21 @@ button {
 
 
 .controlsContainer {
-    padding: 1rem;
+    padding: 20px 40px 40px;
     display: none;
     flex-direction: column;
     align-items: center;
-    border-style: solid;
-    border-width: 2px;
 }
 
 .controlsContainer.selected {
     display: flex;
 }
 
-.controlsContainer > * {
-    padding: 20px;
+
+.controlsContainer button {
+    margin-bottom: 40px;
+    margin-top: 10px;
+    padding: 30px;
 }
 
 .controlsOptions {
@@ -108,7 +94,7 @@ button {
 }
 
 .controlsOptions > * {
-    padding: 10px;
+    margin-bottom: 10px;
 }
 
 
@@ -116,21 +102,42 @@ button {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    padding: 10px;
-    font-size: 1.5rem;
+    font-size: 2.5rem;
 }
 
 .tabs .selected {
-    background-color: beige;
+    background-color: #c46275;
+    font-weight: bold;
+}
+
+.tabs div:not(.selected) {
+    background-color: #C39FA6FF;
+}
+
+.tabs >* {
+    height: 100%;
+    flex:1;
+    text-align: center;
+    padding: 40px;
+}
+
+.tabs div:first-child {
+    border-radius: 20px 0 0 0;
+}
+
+.tabs div:last-child {
+    border-radius: 0 20px 0 0;
 }
 
 .radioGrid {
     display: flex;
     flex-direction: column;
+    padding: 0;
+    margin-top: 20px;
 }
 
 .radioSelectionContainer {
-    margin: 20px;
+    margin: 15px;
 }
 
 .radioSelectionContainer span {
@@ -138,13 +145,24 @@ button {
 }
 
 
-
 .radioSelection {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
 }
 
-.radioSelection >* {
+.radioSelection > * {
     padding: 10px;
+}
+
+.tabs div.left-neighbour-selected {
+    border-bottom-left-radius: 20px;
+}
+
+.tabs div.right-neighbour-selected {
+    border-bottom-right-radius: 20px;
+}
+
+#hiddenDisplay span {
+    border-radius: 10px;
 }

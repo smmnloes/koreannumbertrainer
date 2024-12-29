@@ -39,7 +39,7 @@ function getShowTimeWrittenOption () {
 function getNumberFrom () {
   const numberFromInput = document.querySelector('#numberFromInput')
   const numberFromUserInput = Number.parseInt(numberFromInput.value)
-  return isNaN(numberFromUserInput) || numberFromUserInput < MIN_VALUE_FROM ? DEFAULT_FROM : numberFromUserInput
+  return isNaN(numberFromUserInput) || (numberFromUserInput < MIN_VALUE_FROM) ? DEFAULT_FROM : numberFromUserInput
 }
 
 function getNumberTo () {
@@ -282,15 +282,26 @@ const tabsAndControls = [
   [document.getElementById('weekdaysTab'), document.getElementById('weekdayControls')],
   [document.getElementById('timeTab'), document.getElementById('timeControls')]
 ]
-const selectTab = (tab, control) => {
+const selectTab = (index) => {
+  // reset classes
+  tabsAndControls.forEach((tandc) => tandc.forEach(element => element.classList.remove('selected', 'left-neighbour-selected', 'right-neighbour-selected')))
+
+  // reset display
+  setDisplays('&nbsp;', '&nbsp;')
+  showAnswer()
+
+  const [tab, control] = tabsAndControls[index]
   tab.classList.add('selected')
   control.classList.add('selected')
-  tabsAndControls.forEach(([otherTab, otherControl]) => {
-    if (tab !== otherTab) {
-      otherTab.classList.remove('selected')
-      otherControl.classList.remove('selected')
-    }
-  })
+
+  const leftNeighbour = tabsAndControls[index - 1]
+  if (leftNeighbour) {
+    leftNeighbour[0].classList.add('right-neighbour-selected')
+  }
+  const rightNeighbour = tabsAndControls[index + 1]
+  if (rightNeighbour) {
+    rightNeighbour[0].classList.add('left-neighbour-selected')
+  }
 }
 
-tabsAndControls.forEach(([tab, control]) => tab.addEventListener('click', () => selectTab(tab, control)))
+tabsAndControls.forEach(([tab, control], index) => tab.addEventListener('click', () => selectTab(index)))

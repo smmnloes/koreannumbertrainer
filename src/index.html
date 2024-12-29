@@ -11,68 +11,78 @@
     <h1>Korean Trainer</h1>
     <div id="content">
         <div id="tabs" class="tabs">
-            <div id="numbersTab" class="selected">Numbers</div>
-            <div id="weekdaysTab">Weekdays</div>
-            <div id="timeTab">Time</div>
+            <div id="numbersTab" class="selected"><span>Numbers</span></div>
+            <div id="weekdaysTab" class="left-neighbour-selected"><span>Weekdays</span></div>
+            <div id="timeTab"><span>Time</span></div>
         </div>
         <div id="displays">
-            <div class="display" id="visibleDisplay"><span>Click a button</span></div>
+            <div class="display" id="visibleDisplay"><span>Click "Go!"</span></div>
             <div class="display" id="hiddenDisplay"><span> to start...</span></div>
         </div>
         <div id="controls">
             <div id="numberControls" class="controlsContainer selected">
+                <button id="newNumberButton">Go!</button>
                 <div class="controlsOptions">
                     <div id="numberFrom">
-                        <label for="numberFromInput">Min:</label>
-                        <input id="numberFromInput" min="1" placeholder="1" type="number">
+                        <label for="numberFromInput">min</label>
+                        <input inputmode="numeric" id="numberFromInput" min="1" placeholder="1" type="text">
                     </div>
                     <div id="numberTo">
-                        <label for="numberToInput">Max:</label>
-                        <input id="numberToInput" placeholder="9999999999999999999" type="number">
+                        <label for="numberToInput">max</label>
+                        <input inputmode="numeric" id="numberToInput" placeholder="99" type="text">
                     </div>
                     <div class="radioGrid">
                         <div class="radioSelectionContainer">
                             <span>Number system</span>
                             <div class="radioSelection">
-                                <input checked id="chineseNumber" name="selectNumberSystem" type="radio">
-                                <label for="chineseNumber">Chinese</label>
-                                <input id="koreanNumber" name="selectNumberSystem" type="radio">
-                                <label for="koreanNumber">Korean</label>
+                                <div>
+                                    <input checked id="chineseNumber" name="selectNumberSystem" type="radio">
+                                    <label for="chineseNumber">Chinese</label>
+                                </div>
+                                <div>
+                                    <input id="koreanNumber" name="selectNumberSystem" type="radio">
+                                    <label for="koreanNumber">Korean</label>
+                                </div>
                             </div>
                         </div>
                         <div class="radioSelectionContainer">
                             <span>Reveal</span>
                             <div class="radioSelection">
-                                <input checked id="showDigits" name="selectNumberDirection"
-                                       type="radio">
-                                <label for="showDigits">Digits</label>
-                                <input id="showWritten" name="selectNumberDirection" type="radio">
-                                <label for="showWritten">Written</label>
+                                <div>
+                                    <input checked id="showDigits" name="selectNumberDirection"
+                                           type="radio">
+                                    <label for="showDigits">Digits</label>
+                                </div>
+                                <div>
+                                    <input id="showWritten" name="selectNumberDirection" type="radio">
+                                    <label for="showWritten">Written</label>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <button id="newNumberButton">Number</button>
+
             </div>
             <div id="timeControls" class="controlsContainer">
+                <button id="newTimeButton">Go!</button>
+
                 <div class="controlsOptions">
                     <div class="radioGrid">
                         <div class="radioSelectionContainer">
                             <span>Reveal</span>
                             <div class="radioSelection">
-                                <label><input checked id="showTimeDigits" name="selectTimeDirection" type="radio">Digits</label>
-                                <label><input id="showTimeWritten" name="selectTimeDirection" type="radio"
-                                >Written</label>
+                                <input checked id="showTimeDigits" name="selectTimeDirection" type="radio">
+                                <label for="showTimeDigits">Digits</label>
+                                <input id="showTimeWritten" name="selectTimeDirection" type="radio">
+                                <label for="showTimeWritten">Written</label>
                             </div>
                         </div>
                     </div>
                 </div>
-                <button id="newTimeButton">Time</button>
-
-
             </div>
 
             <div id="weekdayControls" class="controlsContainer">
+                <button id="newWeekDayButton">Go!</button>
                 <div class="controlsOptions">
                     <div class="radioGrid">
                         <div class="radioSelectionContainer">
@@ -87,10 +97,7 @@
                         </div>
                     </div>
                 </div>
-                <button id="newWeekDayButton">Weekday</button>
             </div>
-
-
         </div>
     </div>
 </div>
