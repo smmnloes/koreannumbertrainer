@@ -67,7 +67,6 @@ function newNumber () {
   const numberFrom = getNumberFrom()
   const numberTo = getNumberTo()
   const randomNumber = getRandomBetweenInclusive(numberFrom, numberTo)
-  console.log(randomNumber)
   const koreanNumberSystem = document.querySelector('#koreanNumber').checked
   const showWritten = getShowNumberWrittenOption()
   try {
