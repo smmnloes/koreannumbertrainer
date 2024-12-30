@@ -97,6 +97,12 @@ export function getTimeWritten (hours, minutes) {
   return output
 }
 
+/**
+ *
+ * @param from (BigInt)
+ * @param to (BigInt)
+ * @returns random number
+ */
 function getRandomBetweenInclusive (from, to) {
   const range = to - from + 1n
   const bitsNeeded = range.toString(2).length
