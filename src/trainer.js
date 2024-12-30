@@ -1,6 +1,9 @@
-const DEFAULT_FROM = 1
-const DEFAULT_TO = 99
-const MIN_VALUE_FROM = 1
+const DEFAULT_FROM = 1n
+const DEFAULT_TO = 99n
+
+const MIN_VALUE = 1n
+const MAX_VALUE_CHINESE_SYSTEM = 9999999999999999999n
+const MAX_VALUE_KOREAN_SYSTEM = 99n
 
 function getVisibleDisplay () {
   return document.querySelector('#visibleDisplay span')
@@ -36,22 +39,35 @@ function getShowTimeWrittenOption () {
   return document.querySelector('#showTimeWritten').checked
 }
 
+const getBigintFromString = (stringValue) => {
+  if (!stringValue) {
+    return null
+  }
+  try {
+    return BigInt(stringValue)
+  } catch (e) {
+    console.error(e, `Error during BigInt parsing of value ${stringValue}`)
+    return null
+  }
+}
+
 function getNumberFrom () {
   const numberFromInput = document.querySelector('#numberFromInput')
-  const numberFromUserInput = Number.parseInt(numberFromInput.value)
-  return isNaN(numberFromUserInput) || (numberFromUserInput < MIN_VALUE_FROM) ? DEFAULT_FROM : numberFromUserInput
+  const numberFromUserInput = getBigintFromString(numberFromInput.value)
+  return numberFromUserInput === null ? DEFAULT_FROM : numberFromUserInput
 }
 
 function getNumberTo () {
   const numberToInput = document.querySelector('#numberToInput')
-  const numberToUserInput = Number.parseInt(numberToInput.value)
-  return isNaN(numberToUserInput) ? DEFAULT_TO : numberToUserInput
+  const numberToUserInput = getBigintFromString(numberToInput.value)
+  return numberToUserInput === null ? DEFAULT_TO : numberToUserInput
 }
 
 function newNumber () {
   const numberFrom = getNumberFrom()
   const numberTo = getNumberTo()
   const randomNumber = getRandomBetweenInclusive(numberFrom, numberTo)
+  console.log(randomNumber)
   const koreanNumberSystem = document.querySelector('#koreanNumber').checked
   const showWritten = getShowNumberWrittenOption()
   try {
@@ -63,10 +79,10 @@ function newNumber () {
 }
 
 function newTime () {
-  const hours = getRandomBetweenInclusive(1, 12)
-  const minutes = getRandomBetweenInclusive(0, 59)
+  const hours = getRandomBetweenInclusive(1n, 12n)
+  const minutes = getRandomBetweenInclusive(0n, 59n)
   const written = getTimeWritten(hours, minutes)
-  const digits = hours.pad(2) + ':' + minutes.pad(2)
+  const digits = padNumber(hours, 2) + ':' + padNumber(minutes, 2)
   getShowTimeWrittenOption() ? setDisplays(written, digits) : setDisplays(digits, written)
 }
 
@@ -82,7 +98,17 @@ export function getTimeWritten (hours, minutes) {
 }
 
 function getRandomBetweenInclusive (from, to) {
-  return Math.floor(from + (Math.random() * (to - from + 1)))
+  const range = to - from + 1n
+  const bitsNeeded = range.toString(2).length
+  let random
+
+  do {
+    random = BigInt('0b' + Array.from(
+      window.crypto.getRandomValues(new Uint8Array(Math.ceil(bitsNeeded / 8)))
+    ).map(b => b.toString(2).padStart(8, '0')).join('').slice(0, bitsNeeded))
+  } while (random >= range)
+
+  return from + random
 }
 
 const numbersWrittenKorean = {
@@ -127,8 +153,8 @@ const numbersWrittenKorean = {
 }
 
 export function getNumberWrittenKorean (number, useAbbreviated = false) {
-  if (number > 99) {
-    throw new Error('Error! Only numbers < 100 exist in the Korean system.')
+  if (number > MAX_VALUE_KOREAN_SYSTEM || number < MIN_VALUE) {
+    throw new Error('Error! Only numbers between 1 and 99 exist in the Korean system.')
   }
   const numberAsStringReversed = reverseString(number.toString())
 
@@ -175,8 +201,8 @@ const numbersWrittenChinese = {
 }
 
 export function getNumberWrittenChinese (number) {
-  if (number > 9999999999999999999 || number < 1) {
-    throw new Error('Only numbers between 1 and 9999999999999999999 supported.')
+  if (number > MAX_VALUE_CHINESE_SYSTEM || number < MIN_VALUE) {
+    throw new Error('Only numbers between 1 and 9999999999999999999 are supported.')
   }
   const numberAsStringReversed = reverseString(number.toString())
 
@@ -192,15 +218,18 @@ export function getNumberWrittenChinese (number) {
       output = ' ' + output
     }
     /// / 10^X-part, e.g. the 백 in 이백삼
-    const new10XPart = (
-      // If we are 0, then we don't want the 10^X part. (e.g. second digit in 100)
-      currentChar > 0 ||
-      // But if we have a break-point (e.g. 만 or 억), we need it even if it is zero: 10 0000 is 십만
-      (isBreakPoint &&
-        // But only if we did not also reach the next bigger break point and we have only zeros in the next
-        // four digits:
-        // 1 0000 0000 is 일억, no 만 here, but:  1 0010 0000 is 일억백만, here we need the 만
-        nextFourDigitsHaveNonZero(i, numberAsStringReversed))) ? numbersWrittenChinese[i] : ''
+    const new10XPart =
+      (
+        // If we are 0, then we don't want the 10^X part. (e.g. second digit in 100)
+        currentChar > 0 ||
+        // But if we have a break-point (e.g. 만 or 억), we need it even if it is zero: 10 0000 is 십만
+        (isBreakPoint &&
+          // But only if we did not also reach the next bigger break point and we have only zeros in the next
+          // four digits:
+          // 1 0000 0000 is 일억, no 만 here, but:  1 0010 0000 is 일억백만, here we need the 만
+          nextFourDigitsHaveNonZero(i, numberAsStringReversed)))
+        ? numbersWrittenChinese[i]
+        : ''
 
     // Prepend new part
     output = new10XPart + output
@@ -213,8 +242,9 @@ export function getNumberWrittenChinese (number) {
       // we need the multiplier even if it is 1:
       //
       ([8, 12, 16].includes(i) && (numberAsStringReversed.length - 1 === i)) ||
-      (isBreakPoint && nextFourDigitsHaveNonZero(i, numberAsStringReversed))
-    ) ? numbersWrittenChinese[0][currentChar] : ''
+      (isBreakPoint && nextFourDigitsHaveNonZero(i, numberAsStringReversed)))
+      ? numbersWrittenChinese[0][currentChar]
+      : ''
 
     output = new10XMultiplierPart + output
   }
@@ -255,7 +285,7 @@ let lastWeekdayRandom
 function newWeekDay () {
   let random
   do {
-    random = getRandomBetweenInclusive(0, 6)
+    random = getRandomBetweenInclusive(0n, 6n)
   }
   while (random === lastWeekdayRandom)
 
@@ -264,8 +294,8 @@ function newWeekDay () {
   getShowWeekdayEnglishOption() ? setDisplays(randomWeekDayEnglish, weekDays[randomWeekDayEnglish]) : setDisplays(weekDays[randomWeekDayEnglish], randomWeekDayEnglish)
 }
 
-Number.prototype.pad = function (size) {
-  let s = String(this)
+function padNumber (inputNumber, size) {
+  let s = String(inputNumber)
   while (s.length < (size || 2)) {
     s = '0' + s
   }
